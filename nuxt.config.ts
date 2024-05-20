@@ -9,4 +9,7 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
+  devServer: {
+    host: '0.0.0.0',
+  },
 })

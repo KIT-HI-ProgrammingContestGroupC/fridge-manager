@@ -38,6 +38,21 @@ yarn dev
 bun run dev
 ```
 
+### To enable Barcode Detector
+- You have to start server as **https** server:
+```bash
+# npm
+npm run dev:https
+```
+
+- You need any one of
+  - Android
+  - Mac OS
+  - ChromeOS
+  
+See [https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector#browser_compatibility](https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector#browser_compatibility)
+
+
 ## Production
 
 Build the application for production:

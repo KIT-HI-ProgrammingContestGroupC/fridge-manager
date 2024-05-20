@@ -15,12 +15,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useNuxtApp } from '#app'
 
 const video = ref<HTMLVideoElement | null>(null)
 const barcodeStatus = ref<string>('No barcode detected')
 const barcodeResult = ref<string>('')
+
+interface Emits {
+  (event: 'barcode-detected', barcodeResult: string): void
+}
+const emit = defineEmits<Emits>()
 
 const { $getCameraStream, $detectBarcodes } = useNuxtApp()
 
@@ -38,6 +43,7 @@ const startBarcodeDetection = async () => {
         if (barcodes.length > 0) {
           barcodeStatus.value = `Barcode detected`
           barcodeResult.value = barcodes[0].rawValue
+          emit('barcode-detected', barcodes[0].rawValue)
         }
         else {
           barcodeStatus.value = 'No barcode detected'

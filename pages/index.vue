@@ -3,8 +3,6 @@
     <v-container>
       <!-- header -->
       <v-app-bar>
-        <v-app-bar-title>Application Bar</v-app-bar-title>
-        <v-spacer />
         <v-btn
           id="menu-activator"
           color="primary"

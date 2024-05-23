@@ -1,4 +1,5 @@
 <script setup>
+
 const owner_name = ref('');
 const product_name = ref('');
 const eating_allowed = ref('');
@@ -6,9 +7,9 @@ const image_url = ref('');
 const { data: items } = useFetch('/api/fridge_items');
 
 const addItem = () => {
-  const { data } = useFetch('/api/fridge_items', {
+  useFetch('/api/fridge_items', {
     method: 'post',
-    body: { 
+    body: {
       owner_name: owner_name.value,
       product_name: product_name.value,
       eating_allowed: eating_allowed.value,
@@ -34,23 +35,23 @@ const addItem = () => {
     <form @submit.prevent="addItem">
       <div>
         <label>所有者名</label>
-        <input v-model="owner_name" />
+        <input v-model="owner_name" @keypress.enter.prevent="submitForm"/>
         <br>
 
         <label>商品名</label>
-        <input v-model="product_name" />
+        <input v-model="product_name" @keypress.enter.prevent="submitForm"/>
         <br>
 
         <label>他の人が食べていいか</label>
         <br>
-        <input type="radio" id="OK" value="true" v-model="eating_allowed">
+        <input type="radio" id="OK" value="true" v-model="eating_allowed" @keypress.enter.prevent="submitForm">
         <label>OK</label>
-        <input type="radio" id="NG" value="false" v-model="eating_allowed">
+        <input type="radio" id="NG" value="false" v-model="eating_allowed" @keypress.enter.prevent="submitForm">
         <label>NG</label>
         <br>
 
         <label>画像のURL</label>
-        <input v-model="image_url" />
+        <input v-model="image_url" @keypress.enter.prevent="submitForm"/>
         <br>
 
       </div>
@@ -61,7 +62,7 @@ const addItem = () => {
         <p>{{ "product_name: " + product_name }}</p>
         <p>{{ "eating_allowed: " + eating_allowed }}</p>
         <p>{{ "image_url: " + image_url }}</p>
-        <button type="submit">タスクを登録</button>
+        <button type="submit">登録</button>
       </div>
     </form>
   </div>

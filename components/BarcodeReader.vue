@@ -19,10 +19,6 @@
       />
     </div>
 
-    <p>
-      Last result: <b>{{ result }}</b>
-    </p>
-
     <qrcode-stream
       v-if="selectedDevice !== null"
       :constraints="{ deviceId: selectedDevice.deviceId }"
@@ -44,9 +40,14 @@ const barcodeFormats: BarcodeFormat[] = ['ean_13', 'ean_8']
 /** * detection handling ***/
 const result: Ref<string> = ref('')
 
+const emit = defineEmits<{
+  (e: 'barcode-detected', value: string): void
+}>()
+
 function onDetect(detectedCodes: DetectedBarcode[]) {
   console.log(detectedCodes)
   result.value = JSON.stringify(detectedCodes.map(code => code.rawValue))
+  emit('barcode-detected', result.value)
 }
 
 /** * select camera ***/

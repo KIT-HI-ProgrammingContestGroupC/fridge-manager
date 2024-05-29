@@ -20,17 +20,17 @@
     </div>
 
     <qrcode-stream
-      v-if="selectedDevice !== null"
-      :constraints="{ deviceId: selectedDevice.deviceId }"
+      :constraints="constraints"
       :formats="barcodeFormats"
       @error="onError"
       @detect="onDetect"
+      @camera-on="onCameraReady"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import type { DetectedBarcode, BarcodeFormat } from 'barcode-detector/pure'
 
@@ -54,13 +54,22 @@ function onDetect(detectedCodes: DetectedBarcode[]) {
 const selectedDevice: Ref<MediaDeviceInfo | null> = ref(null)
 const devices: Ref<MediaDeviceInfo[]> = ref([])
 
-onMounted(async () => {
+async function onCameraReady() {
+  // NOTE: on iOS we can't invoke `enumerateDevices` before the user has given
+  // camera access permission. `QrcodeStream` internally takes care of
+  // requesting the permissions. The `camera-on` event should guarantee that this
+  // has happened.
   devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
     ({ kind }) => kind === 'videoinput',
   )
+}
 
-  if (devices.value.length > 0) {
-    selectedDevice.value = devices.value[0]
+const constraints = computed(() => {
+  if (selectedDevice.value === null) {
+    return { facingMode: 'environment' }
+  }
+  else {
+    return { deviceId: selectedDevice.value.deviceId }
   }
 })
 

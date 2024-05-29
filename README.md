@@ -24,9 +24,19 @@ bun install
 
 Start the development server on `http://localhost:3000`:
 
+### To enable camera
+You have to start server with https.
+
+Start the development server on `https://localhost:3000`:
+
+If you want to access the deployment server from your smartphone, access to `https://Your_servers_IP_address:3000`:
+
 ```bash
 # npm
 npm run dev
+
+# npm, enable camera
+npm run dev:https
 
 # pnpm
 pnpm run dev

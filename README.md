@@ -1,85 +1,21 @@
-# Nuxt 3 Minimal Starter
+# Fridge Manager
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+冷蔵庫の中のものを管理するためのwebアプリ
 
-## Setup
-
-Make sure to install the dependencies:
+## For developer
+### パッケージのインストール
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-### To enable camera
-You have to start server with https.
-
-Start the development server on `https://localhost:3000`:
-
-If you want to access the deployment server from your smartphone, access to `https://Your_servers_IP_address:3000`:
-
+### サーバの起動
 ```bash
-# npm
 npm run dev
-
-# npm, enable camera
-npm run dev:https
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+- サーバを起動したPCからアクセスする場合、`https://localhost:3000`にアクセス
+- 外部デバイスからアクセスする場合、 `https://YOUR_SERVERS_IP_ADDRESS:3000`にアクセス
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+証明書なしでhttpsブラウザにアクセスしているためプライバシーエラーの画面が出る。
+Chromeであれば Advanced > Proceed to YOUR_SERVERS_IP_ADDRESS (unsafe) をクリックすればアクセスできる。

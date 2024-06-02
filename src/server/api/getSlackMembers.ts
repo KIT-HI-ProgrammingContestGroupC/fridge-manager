@@ -1,46 +1,42 @@
-// server/api/getSlackMembers.ts
-import { defineEventHandler, createError } from 'h3'
-import axios from 'axios'
-import { useRuntimeConfig } from '#imports'
-
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
   const token = config.slackBotToken
   const channelId = config.slackChannelId
 
   try {
     // チャンネルメンバーの取得
-    const response = await axios.get('https://slack.com/api/conversations.members', {
-      params: { channel: channelId },
-      headers: { Authorization: `Bearer ${token}` }
+    const response = await fetch(`https://slack.com/api/conversations.members?channel=${channelId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-
-    if (!response.data.ok) {
-      throw new Error(response.data.error)
+    if (!response.ok) {
+      throw new Error('Failed to fetch channel members')
     }
-
-    const memberIds = response.data.members
+    const data = await response.json()
+    const memberIds = data.members
 
     // メンバーの詳細情報の取得
     const members = await Promise.all(memberIds.map(async (id: string) => {
-      const userResponse = await axios.get('https://slack.com/api/users.info', {
-        params: { user: id },
-        headers: { Authorization: `Bearer ${token}` }
+      const userResponse = await fetch(`https://slack.com/api/users.info?user=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-
-      if (!userResponse.data.ok) {
-        throw new Error(userResponse.data.error)
+      if (!userResponse.ok) {
+        throw new Error('Failed to fetch user info')
       }
-
-      return userResponse.data.user
+      const userData = await userResponse.json()
+      return userData.user
     }))
 
     return members
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error fetching Slack members:', error)
     throw createError({
       statusCode: 500,
-      statusMessage: 'An error occurred while fetching Slack members.'
+      statusMessage: 'An error occurred while fetching Slack members.',
     })
   }
 })

@@ -84,18 +84,18 @@
               <span class="headline">Popup</span>
             </v-card-title>
 
-
             <!-- Slackからユーザ名を取得→プルダウン表示
             プルダウンの表示の仕方など自由に変更してください（sasaki） -->
             <v-card-text>
               <v-card-text>
                 Owner:
                 <select v-model="selectedMember">
-                  <option v-for="member in members" 
-                  :key="member.id" 
-                  :value="member"
+                  <option
+                    v-for="member in members"
+                    :key="member.id"
+                    :value="member"
                   >
-                  {{ member.name }}
+                    {{ member.profile.real_name }}
                   </option>
                 </select>
               </v-card-text>
@@ -122,7 +122,7 @@
 </template>
 
 <script setup>
-import { ref, computed , onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRuntimeConfig } from '#imports'
 
 const menuItems = ref([
@@ -187,31 +187,31 @@ const editItem = () => {
   alert('項目編集')
 }
 
-
 // slackのAPI(ユーザ名)取得関数
+// id: string; name: string型の定義？
 const members = ref([])
 const selectedMember = ref(null)
-  
+
 const fetchMembers = async () => {
   try {
     const config = useRuntimeConfig()
     const res = await $fetch('/api/getSlackMembers', {
       headers: {
-        Authorization: `Bearer ${config.slackBotToken}`
-      }
+        Authorization: `Bearer ${config.slackBotToken}`,
+      },
     })
     members.value = res
-    console.log("Members fetched successfully:", members.value)
-    members.value.forEach(member => {
-      console.log(member.name);
-    });
+    console.log('Members fetched successfully:', members.value)
+    members.value.forEach((member) => {
+      console.log(member.name)
+    })
 
     if (members.value.length > 0) {
       selectedMember.value = members.value[0]
     }
-
-  } catch (error) {
-    console.error('Error fetching Slack members:', error);
+  }
+  catch (error) {
+    console.error('Error fetching Slack members:', error)
   }
 }
 

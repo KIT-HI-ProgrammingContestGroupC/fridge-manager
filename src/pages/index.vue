@@ -7,16 +7,20 @@
           id="menu-activator"
           color="primary"
         >
-          Sibling activator
+          <v-icon
+            color="info"
+            icon="mdi-menu"
+          />
         </v-btn>
         <v-menu activator="#menu-activator">
           <v-list>
             <v-list-item
               v-for="(item, index) in menuItems"
               :key="index"
-              :value="index"
             >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title @click="clickMenu(item.action)">
+                {{ item.title }}
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -41,12 +45,43 @@
         </v-row>
 
         <!-- Data Table -->
-        <v-data-table
+        <!-- <v-data-table
+          v-model="selected"
+          :headers="headers"
+          item-value="id"
           :items="filteredRows"
           class="elevation-1"
-          item-value="name"
-        />
-
+        /> -->
+        <v-data-table
+          :headers="headers"
+          :items="filteredRows"
+          item-value="id"
+          class="elevation-1"
+        >
+          <template #item.selected="{ index }">
+            <v-container
+              v-if="showCheckboxes"
+            >
+              <v-checkbox
+                v-model="checkBoxes[index]"
+                :value="index+1"
+              />
+            </v-container>
+          </template>
+          <!-- <template #item.data="{ item }">
+            {{ item }}
+          </template> -->
+        </v-data-table>
+        <v-expand-transition>
+          <v-btn
+            v-if="showCheckboxes"
+            label="Delete"
+            color="error"
+            @click="deleteItem(checkBoxes)"
+          >
+            削除
+          </v-btn>
+        </v-expand-transition>
         <v-row
           align="center"
           justify="center"
@@ -54,6 +89,7 @@
           <v-col cols="auto">
             <!-- Puls Action Button -->
             <v-btn
+              color="error"
               density="comfortable"
               icon="mdi-plus"
               style="bottom: 100px"
@@ -64,6 +100,7 @@
           <v-col cols="auto">
             <!-- Search Action Button -->
             <v-btn
+              color="info"
               density="comfortable"
               icon="mdi-magnify"
               style="bottom: 100px"
@@ -100,14 +137,24 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
+const headers = ref([
+  { title: 'ID', key: 'id' },
+  { title: 'Owner', key: 'owner' },
+  { title: 'Date', key: 'date' },
+  { title: 'Name', key: 'name' },
+  { title: 'Take', key: 'take' },
+  { title: 'Photo', key: 'photo' },
+  { title: '', key: 'selected' },
+])
 const menuItems = ref([
-  { title: '項目削除' },
-  { title: '項目編集' },
+  { title: '項目削除', action: 'delete' },
+  { title: '項目編集', action: 'edit' },
 ])
 const rows = ref([
   {
+    id: '1',
     owner: 'Alice',
     date: '2024-05-01',
     name: 'Item1',
@@ -115,6 +162,7 @@ const rows = ref([
     photo: 'Photo1',
   },
   {
+    id: '2',
     owner: 'Bob',
     date: '2024-05-02',
     name: 'Item2',
@@ -122,6 +170,7 @@ const rows = ref([
     photo: 'Photo2',
   },
   {
+    id: '3',
     owner: 'Charlie',
     date: '2024-05-03',
     name: 'Item3',
@@ -133,7 +182,9 @@ const rows = ref([
 const searchQuery = ref('')
 const showSearchBar = ref(false)
 const showPopup = ref(false)
-
+const showCheckboxes = ref(false)
+// const selectedItems = ref([])
+const debug = ref([])
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
     return rows.value
@@ -146,6 +197,7 @@ const filteredRows = computed(() => {
     )
   }
 })
+const checkBoxes = ref('')
 
 const toggleSearchBar = () => {
   showSearchBar.value = !showSearchBar.value
@@ -154,15 +206,37 @@ const toggleSearchBar = () => {
   }
 }
 
-const deleteItem = () => {
-  // 削除ボタンでこの関数に飛ぶ「予定」
-  alert('項目削除')
+const toggleCheckboxes = () => {
+  showCheckboxes.value = !showCheckboxes.value
+}
+
+const clickMenu = (action) => {
+  if (action == 'delete') {
+    checkBoxes.value = (filteredRows.value.map(() => false))
+    toggleCheckboxes()
+  }
+  else if (action == 'edit') {
+    editItem()
+  }
+}
+const deleteItem = (id) => {
+  debug.value = id
+  toggleCheckboxes()
 }
 
 const editItem = () => {
-  // 編集ボタンでこの関数に飛ぶ「予定」
-  alert('項目編集')
+
 }
+
+watch(filteredRows, (newfilteredRows) => {
+  const lengthDifference = newfilteredRows.length - checkBoxes.value.length
+  if (lengthDifference > 0) {
+    checkBoxes.value.push(...Array(lengthDifference).fill(false))
+  }
+  else if (lengthDifference < 0) {
+    checkBoxes.value.splice(lengthDifference)
+  }
+})
 </script>
 
 <style scoped>

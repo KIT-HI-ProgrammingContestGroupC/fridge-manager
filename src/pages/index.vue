@@ -194,11 +194,8 @@ const selectedMember = ref(null)
 
 const fetchMembers = async () => {
   try {
-    const config = useRuntimeConfig()
+    // const config = useRuntimeConfig()
     const res = await $fetch('/api/getSlackMembers', {
-      headers: {
-        Authorization: `Bearer ${config.slackBotToken}`,
-      },
     })
     members.value = res
     console.log('Members fetched successfully:', members.value)

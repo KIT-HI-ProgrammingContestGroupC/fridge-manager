@@ -194,7 +194,6 @@ const selectedMember = ref(null)
 
 const fetchMembers = async () => {
   try {
-    // const config = useRuntimeConfig()
     const res = await $fetch('/api/getSlackMembers', {
     })
     members.value = res

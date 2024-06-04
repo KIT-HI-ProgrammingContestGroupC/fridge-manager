@@ -98,11 +98,36 @@
                     {{ member.profile.real_name }}
                   </option>
                 </select>
+                <v-autocomplete
+                  v-model="selectedItem"
+                  label="Owner"
+                  :items="['Alice', 'Bob', 'Charlie', 'Guest']"
+                />
+                <v-text-field
+                  hint="Enter your product name you want to put on the fridge"
+                  label="Product Name"
+                  type="input"
+                />
+                <v-col cols="6">
+                  <v-switch
+                    :model-value="true"
+                    color="primary"
+                    label="Take free?"
+                    inset
+                  />
+                </v-col>
+                Photo
+                <v-img
+                  :width="300"
+                  aspect-ratio="16/9"
+                  cover
+                  src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+                />
               </v-card-text>
               <!-- 名前の表示の仕方
               <div v-if="selectedMember">
                 Owner: {{ selectedMember.name }}
-              </div>  -->
+              </div> -->
             </v-card-text>
 
             <v-card-actions>

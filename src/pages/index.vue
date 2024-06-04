@@ -83,6 +83,28 @@
             <v-card-title>
               <span class="headline">Popup</span>
             </v-card-title>
+
+            <!-- Slackからユーザ名を取得→プルダウン表示
+            プルダウンの表示の仕方など自由に変更してください（sasaki） -->
+            <v-card-text>
+              <v-card-text>
+                Owner:
+                <select v-model="selectedMember">
+                  <option
+                    v-for="member in members"
+                    :key="member.id"
+                    :value="member"
+                  >
+                    {{ member.profile.real_name }}
+                  </option>
+                </select>
+              </v-card-text>
+              <!-- 名前の表示の仕方
+              <div v-if="selectedMember">
+                Owner: {{ selectedMember.name }}
+              </div>  -->
+            </v-card-text>
+
             <v-card-actions>
               <v-spacer />
               <v-btn
@@ -100,7 +122,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRuntimeConfig } from '#imports'
 
 const menuItems = ref([
   { title: '項目削除' },
@@ -163,6 +186,32 @@ const editItem = () => {
   // 編集ボタンでこの関数に飛ぶ「予定」
   alert('項目編集')
 }
+
+// slackのAPI(ユーザ名)取得関数
+// id: string; name: string型の定義？
+const members = ref([])
+const selectedMember = ref(null)
+
+const fetchMembers = async () => {
+  try {
+    const res = await $fetch('/api/getSlackMembers', {
+    })
+    members.value = res
+    console.log('Members fetched successfully:', members.value)
+    members.value.forEach((member) => {
+      console.log(member.name)
+    })
+
+    if (members.value.length > 0) {
+      selectedMember.value = members.value[0]
+    }
+  }
+  catch (error) {
+    console.error('Error fetching Slack members:', error)
+  }
+}
+
+onMounted(fetchMembers)
 </script>
 
 <style scoped>

@@ -83,25 +83,14 @@
             <v-card-title>
               <span class="headline">Popup</span>
             </v-card-title>
-
-            <!-- Slackからユーザ名を取得→プルダウン表示
-            プルダウンの表示の仕方など自由に変更してください（sasaki） -->
             <v-card-text>
               <v-card-text>
-                Owner:
-                <select v-model="selectedMember">
-                  <option
-                    v-for="member in members"
-                    :key="member.id"
-                    :value="member"
-                  >
-                    {{ member.profile.real_name }}
-                  </option>
-                </select>
-                <v-autocomplete
-                  v-model="selectedItem"
+                <v-select
+                  v-model="selectedMember"
                   label="Owner"
-                  :items="['Alice', 'Bob', 'Charlie', 'Guest']"
+                  :items="members"
+                  item-title="profile.real_name"
+                  return-object
                 />
                 <v-text-field
                   hint="Enter your product name you want to put on the fridge"
@@ -124,10 +113,6 @@
                   src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
                 />
               </v-card-text>
-              <!-- 名前の表示の仕方
-              <div v-if="selectedMember">
-                Owner: {{ selectedMember.name }}
-              </div> -->
             </v-card-text>
 
             <v-card-actions>
@@ -147,9 +132,6 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRuntimeConfig } from '#imports'
-
 const menuItems = ref([
   { title: '項目削除' },
   { title: '項目編集' },
@@ -212,31 +194,20 @@ const editItem = () => {
   alert('項目編集')
 }
 
-// slackのAPI(ユーザ名)取得関数
-// id: string; name: string型の定義？
-const members = ref([])
+const { data: members } = useFetch('/api/getSlackMembers')
+
+// membersが取得できた場合の処理
 const selectedMember = ref(null)
 
-const fetchMembers = async () => {
-  try {
-    const res = await $fetch('/api/getSlackMembers', {
-    })
-    members.value = res
-    console.log('Members fetched successfully:', members.value)
-    members.value.forEach((member) => {
+watch(members, (newMembers) => {
+  if (newMembers.length > 0) {
+    selectedMember.value = newMembers[0]
+    console.log('Members fetched successfully:', newMembers)
+    newMembers.forEach((member) => {
       console.log(member.name)
     })
-
-    if (members.value.length > 0) {
-      selectedMember.value = members.value[0]
-    }
   }
-  catch (error) {
-    console.error('Error fetching Slack members:', error)
-  }
-}
-
-onMounted(fetchMembers)
+})
 </script>
 
 <style scoped>

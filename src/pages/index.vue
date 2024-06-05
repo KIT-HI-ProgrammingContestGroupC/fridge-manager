@@ -200,7 +200,7 @@ const { data: members } = useFetch('/api/getSlackMembers')
 const selectedMember = ref(null)
 
 watch(members, (newMembers) => {
-  if (newMembers && newMembers.length > 0) {
+  if (newMembers.length > 0) {
     selectedMember.value = newMembers[0]
     console.log('Members fetched successfully:', newMembers)
     newMembers.forEach((member) => {

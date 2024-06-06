@@ -110,7 +110,7 @@
                   :width="350"
                   aspect-ratio="16/9"
                   cover
-                  src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+                  src="https://p.potaufeu.asahi.com/bab2-p/picture/27216500/6ff4c31a02eeec219dc41058f3aa608c_640px.jpg"
                 />
               </v-card-text>
             </v-card-text>

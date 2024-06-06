@@ -59,18 +59,11 @@
           class="elevation-1"
         >
           <template #item.selected="{ index }">
-            <v-container
+            <v-checkbox
               v-if="showCheckboxes"
-            >
-              <v-checkbox
-                v-model="checkBoxes[index]"
-                :value="index+1"
-              />
-            </v-container>
+              v-model="checkBoxes[index]"
+            />
           </template>
-          <!-- <template #item.data="{ item }">
-            {{ item }}
-          </template> -->
         </v-data-table>
         <v-expand-transition>
           <v-btn
@@ -82,6 +75,7 @@
             削除
           </v-btn>
         </v-expand-transition>
+
         <v-row
           align="center"
           justify="center"
@@ -183,8 +177,7 @@ const searchQuery = ref('')
 const showSearchBar = ref(false)
 const showPopup = ref(false)
 const showCheckboxes = ref(false)
-// const selectedItems = ref([])
-const debug = ref([])
+
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
     return rows.value
@@ -219,8 +212,20 @@ const clickMenu = (action) => {
     editItem()
   }
 }
-const deleteItem = (id) => {
-  debug.value = id
+const deleteItem = (check) => {
+  /*
+  check：項目削除ボタンで追加されたチェックボックスに対して、
+  チェックをいれるとcheckの値がfalseからtrueに変化する
+  ex:
+  すべての項目にチェックが入っている場合：check == [ true, true, true ]
+  上から□✓□の場合：check == [ false, true, false ]
+  */
+
+  // データベースの削除のためのSampleCode
+  // for (let i = 0; i < check.length; i++) {
+  //   if (check[i])
+  //     delteDatebasse(i)
+  // }
   toggleCheckboxes()
 }
 

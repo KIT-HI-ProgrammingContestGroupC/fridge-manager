@@ -56,7 +56,7 @@
             <v-btn
               density="comfortable"
               icon="mdi-plus"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="showPopup = true"
             />
           </v-col>
@@ -66,7 +66,7 @@
             <v-btn
               density="comfortable"
               icon="mdi-magnify"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="toggleSearchBar"
             />
           </v-col>
@@ -117,22 +117,16 @@
 
             <v-card-actions>
               <v-spacer />
-              <v-chip
+              <v-btn
+                text="Register"
                 color="blue"
-                size="x-large"
-                class="ma-4"
                 variant="flat"
                 @click="showPopup = false"
-              >
-                <span class="text-h5">Register</span>
-              </v-chip>
-              <v-chip
-                size="x-large"
-                class="ma-2"
+              />
+              <v-btn
+                text="close"
                 @click="showPopup = false"
-              >
-                <span class="text-h5">close</span>
-              </v-chip>
+              />
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -223,10 +217,6 @@ watch(members, (newMembers) => {
 <style scoped>
   .v-application {
     font-family: 'Roboto', sans-serif;
-  }
-
-  .v-btn {
-    position: fixed;
   }
 
   .fab {

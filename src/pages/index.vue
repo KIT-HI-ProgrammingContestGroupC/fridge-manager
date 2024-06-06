@@ -56,7 +56,7 @@
             <v-btn
               density="comfortable"
               icon="mdi-plus"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="showPopup = true"
             />
           </v-col>
@@ -66,7 +66,7 @@
             <v-btn
               density="comfortable"
               icon="mdi-magnify"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="toggleSearchBar"
             />
           </v-col>
@@ -107,7 +107,7 @@
                 </v-col>
                 Photo
                 <v-img
-                  :width="300"
+                  :width="350"
                   aspect-ratio="16/9"
                   cover
                   src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
@@ -118,11 +118,15 @@
             <v-card-actions>
               <v-spacer />
               <v-btn
-                color="primary"
+                text="Register"
+                color="blue"
+                variant="flat"
                 @click="showPopup = false"
-              >
-                Close
-              </v-btn>
+              />
+              <v-btn
+                text="close"
+                @click="showPopup = false"
+              />
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -213,10 +217,6 @@ watch(members, (newMembers) => {
 <style scoped>
   .v-application {
     font-family: 'Roboto', sans-serif;
-  }
-
-  .v-btn {
-    position: fixed;
   }
 
   .fab {

@@ -107,7 +107,7 @@
                 </v-col>
                 Photo
                 <v-img
-                  :width="300"
+                  :width="350"
                   aspect-ratio="16/9"
                   cover
                   src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
@@ -117,12 +117,22 @@
 
             <v-card-actions>
               <v-spacer />
-              <v-btn
-                color="primary"
+              <v-chip
+                color="blue"
+                size="x-large"
+                class="ma-4"
+                variant="flat"
                 @click="showPopup = false"
               >
-                Close
-              </v-btn>
+                <span class="text-h5">Register</span>
+              </v-chip>
+              <v-chip
+                size="x-large"
+                class="ma-2"
+                @click="showPopup = false"
+              >
+                <span class="text-h5">close</span>
+              </v-chip>
             </v-card-actions>
           </v-card>
         </v-dialog>

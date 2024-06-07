@@ -128,14 +128,12 @@
                   label="Product Name"
                   type="input"
                 />
-                <v-col cols="6">
-                  <v-switch
-                    :model-value="true"
-                    color="primary"
-                    label="Take free?"
-                    inset
-                  />
-                </v-col>
+                <v-switch
+                  :model-value="true"
+                  color="primary"
+                  label="Take free?"
+                  inset
+                />
                 Photo
                 <v-img
                   :width="350"

@@ -83,10 +83,11 @@
           <v-col cols="auto">
             <!-- Puls Action Button -->
             <v-btn
-              color="error"
+              color="red"
               density="comfortable"
               icon="mdi-plus"
               style="bottom: 100px; position: fixed;"
+              variant="tonal"
               @click="showPopup = true"
             />
           </v-col>
@@ -94,10 +95,11 @@
           <v-col cols="auto">
             <!-- Search Action Button -->
             <v-btn
-              color="info"
+              color="blue"
               density="comfortable"
               icon="mdi-magnify"
               style="bottom: 100px; position: fixed;"
+              variant="tonal"
               @click="toggleSearchBar"
             />
           </v-col>

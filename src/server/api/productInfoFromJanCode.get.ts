@@ -1,3 +1,5 @@
+import type { YahooAPIResponse } from '~/types/yahooAPIResponse'
+
 interface ProductInfo {
   janCode: string
   displayName: string
@@ -9,7 +11,7 @@ interface ProductInfo {
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   try {
-    const response = await $fetch('https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch', {
+    const response = await $fetch<YahooAPIResponse>('https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch', {
       method: 'GET',
       query: {
         appid: useRuntimeConfig().yahooClientId,
@@ -20,11 +22,11 @@ export default defineEventHandler(async (event) => {
     console.log('my_response: ', response)
 
     const productInfo: ProductInfo = {
-      janCode: query.janCode,
+      janCode: query.janCode as string,
       displayName: response.hits[0].name,
       brand: response.hits[0].brand.name,
       company: response.hits[0].parentBrands[1].name,
-      imageUrl: response.hits[0].images.medium,
+      imageUrl: response.hits[0].image.medium,
     }
 
     return productInfo

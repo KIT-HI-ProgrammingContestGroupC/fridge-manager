@@ -128,14 +128,12 @@
                   label="Product Name"
                   type="input"
                 />
-                <v-col cols="6">
-                  <v-switch
-                    :model-value="true"
-                    color="primary"
-                    label="Take free?"
-                    inset
-                  />
-                </v-col>
+                <v-switch
+                  :model-value="true"
+                  color="primary"
+                  label="Take free?"
+                  inset
+                />
                 Photo
                 <v-img
                   :width="350"
@@ -321,9 +319,5 @@ watch(members, (newMembers) => {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .v-card {
-    max-width: 400px;
   }
 </style>

@@ -3,7 +3,7 @@
     Error: {{ error.message }}
   </div>
   <div v-else-if="result">
-    {{ result.janCode }}
+    {{ result }}
   </div>
   <div v-else>
     Loading...

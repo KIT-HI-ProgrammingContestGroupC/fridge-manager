@@ -86,7 +86,7 @@
               color="error"
               density="comfortable"
               icon="mdi-plus"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="showPopup = true"
             />
           </v-col>
@@ -97,7 +97,7 @@
               color="info"
               density="comfortable"
               icon="mdi-magnify"
-              style="bottom: 100px"
+              style="bottom: 100px; position: fixed;"
               @click="toggleSearchBar"
             />
           </v-col>
@@ -114,14 +114,50 @@
             <v-card-title>
               <span class="headline">Popup</span>
             </v-card-title>
+            <v-card-text>
+              <v-card-text>
+                <v-select
+                  v-model="selectedMember"
+                  label="Owner"
+                  :items="members"
+                  item-title="profile.real_name"
+                  return-object
+                />
+                <v-text-field
+                  hint="Enter your product name you want to put on the fridge"
+                  label="Product Name"
+                  type="input"
+                />
+                <v-col cols="6">
+                  <v-switch
+                    :model-value="true"
+                    color="primary"
+                    label="Take free?"
+                    inset
+                  />
+                </v-col>
+                Photo
+                <v-img
+                  :width="350"
+                  aspect-ratio="16/9"
+                  cover
+                  src="https://p.potaufeu.asahi.com/bab2-p/picture/27216500/6ff4c31a02eeec219dc41058f3aa608c_640px.jpg"
+                />
+              </v-card-text>
+            </v-card-text>
+
             <v-card-actions>
               <v-spacer />
               <v-btn
-                color="primary"
+                text="Register"
+                color="blue"
+                variant="flat"
                 @click="showPopup = false"
-              >
-                Close
-              </v-btn>
+              />
+              <v-btn
+                text="close"
+                @click="showPopup = false"
+              />
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -242,15 +278,26 @@ watch(filteredRows, (newfilteredRows) => {
     checkBoxes.value.splice(lengthDifference)
   }
 })
+
+const { data: members } = useFetch('/api/getSlackMembers')
+
+// membersが取得できた場合の処理
+const selectedMember = ref(null)
+
+watch(members, (newMembers) => {
+  if (newMembers.length > 0) {
+    selectedMember.value = newMembers[0]
+    console.log('Members fetched successfully:', newMembers)
+    newMembers.forEach((member) => {
+      console.log(member.name)
+    })
+  }
+})
 </script>
 
 <style scoped>
   .v-application {
     font-family: 'Roboto', sans-serif;
-  }
-
-  .v-btn {
-    position: fixed;
   }
 
   .fab {

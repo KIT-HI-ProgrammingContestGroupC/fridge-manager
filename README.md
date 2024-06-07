@@ -7,7 +7,7 @@
 
 ```bash
 npm install
-```
+```-na
 
 ### サーバの起動
 ```bash
@@ -19,3 +19,8 @@ npm run dev
 
 証明書なしでhttpsブラウザにアクセスしているためプライバシーエラーの画面が出る。
 Chromeであれば Advanced > Proceed to YOUR_SERVERS_IP_ADDRESS (unsafe) をクリックすればアクセスできる。
+
+### .envファイルの設定方法
+（トークン設定のために必ず個人でする）
+Nuxt3でfridge-managerのルート直下に".env"ファイルを作成。
+ファイルの中身は、slackのプロコンc_2024_github_envチャンネルからコピペで！

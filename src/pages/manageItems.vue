@@ -3,6 +3,7 @@ const owner_name = ref('')
 const product_name = ref('')
 const eating_allowed = ref('')
 const image_url = ref('')
+const delete_id = ref('')
 const { data: items } = useFetch('/api/fridge_items')
 
 const addItem = () => {
@@ -20,12 +21,22 @@ const addItem = () => {
   eating_allowed.value = ''
   image_url.value = ''
 }
+
+const deleteItem = () => {
+  useFetch('/api/fridge_items', {
+    method: 'delete',
+    body: {
+      delete_id: delete_id.value,
+    },
+  })
+  delete_id.value = ''
+}
 </script>
 
 <template>
   <div>
     <h1>ここでは冷蔵庫アイテムたちの情報を取得して一覧表示できるよ！追加もできるよ！！</h1>
-    <!-- 表示部分 -->
+    <!-- 一覧表示部分 -->
     <ul>
       <li
         v-for="item in items"
@@ -35,7 +46,10 @@ const addItem = () => {
       </li>
     </ul>
 
+    <hr>
+
     <!-- 入力部分 -->
+    <!-- 追加用 -->
     <form @submit.prevent="addItem">
       <div>
         <label>所有者名</label>
@@ -88,6 +102,23 @@ const addItem = () => {
         <p>{{ "image_url: " + image_url }}</p>
         <button type="submit">
           登録
+        </button>
+      </div>
+    </form>
+
+    <hr>
+
+    <!-- 削除用 -->
+    <form @submit.prevent="deleteItem">
+      <div>
+        <label>削除するID</label>
+        <input
+          v-model="delete_id"
+          @keypress.enter.prevent="submitForm"
+        >
+        <br>
+        <button type="submit">
+          削除
         </button>
       </div>
     </form>

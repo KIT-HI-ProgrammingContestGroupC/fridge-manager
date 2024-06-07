@@ -37,17 +37,13 @@ import type { DetectedBarcode, BarcodeFormat } from 'barcode-detector/pure'
 /** * barcode formats ***/
 const barcodeFormats: BarcodeFormat[] = ['ean_13', 'ean_8']
 
-/** * detection handling ***/
-const result: Ref<string> = ref('')
-
 const emit = defineEmits<{
   (e: 'barcode-detected', value: string): void
 }>()
 
 function onDetect(detectedCodes: DetectedBarcode[]) {
   console.log(detectedCodes)
-  result.value = JSON.stringify(detectedCodes.map(code => code.rawValue))
-  emit('barcode-detected', result.value)
+  emit('barcode-detected', detectedCodes.map(code => code.rawValue)[0])
 }
 
 /** * select camera ***/

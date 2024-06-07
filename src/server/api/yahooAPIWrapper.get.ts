@@ -19,13 +19,20 @@ export default defineEventHandler(async (event) => {
       },
     })
 
-    console.log('my_response: ', response)
+    console.log('my_response: ', response.hits[0])
+
+    if (response.totalResultsReturned === 0) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Product not found.',
+      })
+    }
 
     const productInfo: ProductInfo = {
       janCode: query.janCode as string,
       displayName: response.hits[0].name,
       brand: response.hits[0].brand.name,
-      company: response.hits[0].parentBrands[1].name,
+      company: response.hits[0].parentBrands[1] !== undefined ? response.hits[0].parentBrands[1].name : response.hits[0].parentBrands[0].name,
       imageUrl: response.hits[0].image.medium,
     }
 

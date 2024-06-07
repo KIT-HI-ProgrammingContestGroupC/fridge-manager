@@ -320,8 +320,4 @@ watch(members, (newMembers) => {
     align-items: center;
     justify-content: center;
   }
-
-  .v-card {
-    max-width: 400px;
-  }
 </style>

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-const { data: result, error, pending } = useFetch('/api/productInfoFromJanCode', {
+const { data: result, error, pending } = useFetch('/api/yahooAPIWrapper', {
   query: {
     janCode: 4901085614730,
   },

@@ -1,17 +1,20 @@
 <script setup>
-const owner_name = ref('')
+const items = ref([]) // DBから取得したデータが入る
+const owner_name = ref('') // DBに保存するデータが入る(下3つも同様)
 const product_name = ref('')
 const eating_allowed = ref('')
 const image_url = ref('')
-const delete_id = ref('')
-const items = ref([])
+const delete_id = ref('') // DBのデータ削除で指定するIDが入る
 
+// DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
 const fetchItems = async () => {
   const { data } = await useFetch('/api/fridge_items')
-  items.value = data.value
+  items.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
 
+// DBにデータを追加する関数
 const addItem = async () => {
+  // fridge_items.post.tsの中身を呼び出す
   await useFetch('/api/fridge_items', {
     method: 'post',
     body: {
@@ -21,31 +24,39 @@ const addItem = async () => {
       image_url: image_url.value,
     },
   })
+
+  // 対応するテキストボックス等を空にする
   owner_name.value = ''
   product_name.value = ''
   eating_allowed.value = ''
   image_url.value = ''
-  fetchItems()  // リストを更新
+
+  fetchItems() // リストを更新
 }
 
+// DBからデータを削除する関数
 const deleteItem = async () => {
+  // fridge_items.delete.tsの中身を呼び出す
   await useFetch('/api/fridge_items', {
     method: 'delete',
     body: {
       delete_id: delete_id.value,
     },
   })
+
+  // 対応するテキストボックスを空にする
   delete_id.value = ''
-  fetchItems()  // リストを更新
+
+  fetchItems() // リストを更新
 }
 
-// 初回読み込み時にデータを取得
-fetchItems()
+fetchItems()// 初回読み込み時にデータを取得
 </script>
 
 <template>
   <div>
     <h1>ここでは冷蔵庫アイテムたちの情報を取得して一覧表示できるよ！追加もできるよ！！</h1>
+
     <!-- 一覧表示部分 -->
     <ul>
       <li
@@ -59,7 +70,7 @@ fetchItems()
     <hr>
 
     <!-- 入力部分 -->
-    <!-- 追加用 -->
+    <!-- データ追加用 -->
     <form @submit.prevent="addItem">
       <div>
         <label>所有者名</label>
@@ -103,7 +114,10 @@ fetchItems()
         >
         <br>
       </div>
+
       <hr>
+
+      <!-- 追加内容確認用表示 -->
       <div>
         <p>以下の内容で登録します。</p>
         <p>{{ "owner_name: " + owner_name }}</p>
@@ -118,7 +132,7 @@ fetchItems()
 
     <hr>
 
-    <!-- 削除用 -->
+    <!-- データ削除用 -->
     <form @submit.prevent="deleteItem">
       <div>
         <label>削除するID</label>
@@ -128,7 +142,7 @@ fetchItems()
         >
         <br>
         <button type="submit">
-        削除
+          削除
         </button>
       </div>
     </form>

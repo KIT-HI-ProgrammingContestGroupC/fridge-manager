@@ -208,7 +208,7 @@ const menuItems = ref([
 //     photo: 'Photo3',
 //   },
 // ])
-const rows = ref([]) //表に表示する内容
+const rows = ref([]) // 表に表示する内容
 
 const searchQuery = ref('')
 const showSearchBar = ref(false)

@@ -50,7 +50,8 @@ const deleteItem = async () => {
   fetchItems() // リストを更新
 }
 
-fetchItems()// 初回読み込み時にデータを取得
+// 初回読み込み時にデータを取得
+fetchItems()
 </script>
 
 <template>

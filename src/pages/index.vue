@@ -171,43 +171,44 @@ import { ref, computed, watch } from 'vue'
 
 const headers = ref([
   { title: 'ID', key: 'id' },
-  { title: 'Owner', key: 'owner' },
-  { title: 'Date', key: 'date' },
-  { title: 'Name', key: 'name' },
-  { title: 'Take', key: 'take' },
-  { title: 'Photo', key: 'photo' },
+  { title: 'Owner', key: 'owner_name' },
+  { title: 'Date', key: 'uploaded_at' },
+  { title: 'Name', key: 'product_name' },
+  { title: 'Take', key: 'eating_allowed' },
+  { title: 'Photo', key: 'image_url' },
   { title: '', key: 'selected' },
 ])
 const menuItems = ref([
   { title: '項目削除', action: 'delete' },
   { title: '項目編集', action: 'edit' },
 ])
-const rows = ref([
-  {
-    id: '1',
-    owner: 'Alice',
-    date: '2024-05-01',
-    name: 'Item1',
-    take: '10',
-    photo: 'Photo1',
-  },
-  {
-    id: '2',
-    owner: 'Bob',
-    date: '2024-05-02',
-    name: 'Item2',
-    take: '20',
-    photo: 'Photo2',
-  },
-  {
-    id: '3',
-    owner: 'Charlie',
-    date: '2024-05-03',
-    name: 'Item3',
-    take: '30',
-    photo: 'Photo3',
-  },
-])
+// const rows = ref([
+//   {
+//     id: '1',
+//     owner: 'Alice',
+//     date: '2024-05-01',
+//     name: 'Item1',
+//     take: '10',
+//     photo: 'Photo1',
+//   },
+//   {
+//     id: '2',
+//     owner: 'Bob',
+//     date: '2024-05-02',
+//     name: 'Item2',
+//     take: '20',
+//     photo: 'Photo2',
+//   },
+//   {
+//     id: '3',
+//     owner: 'Charlie',
+//     date: '2024-05-03',
+//     name: 'Item3',
+//     take: '30',
+//     photo: 'Photo3',
+//   },
+// ])
+const rows = ref([]) //表に表示する内容
 
 const searchQuery = ref('')
 const showSearchBar = ref(false)
@@ -226,7 +227,7 @@ const filteredRows = computed(() => {
     )
   }
 })
-const checkBoxes = ref('')
+const checkBoxes = ref([])
 
 const toggleSearchBar = () => {
   showSearchBar.value = !showSearchBar.value
@@ -293,6 +294,15 @@ watch(members, (newMembers) => {
     })
   }
 })
+
+// DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
+// 何か実行した後に表のデータが更新されない！！！という時は、この関数を該当する処理の末尾に入れると解決します。多分。
+const fetchItems = async () => {
+  const { data } = await useFetch('/api/fridge_items')
+  rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
+}
+
+fetchItems()// 初回読み込み時にDBからデータを取得
 </script>
 
 <style scoped>

@@ -2,10 +2,10 @@ import type { YahooAPIResponse } from '~/types/yahooAPIResponse'
 
 interface ProductInfo {
   janCode: string
-  displayName: string
-  brand: string
-  company: string
-  imageUrl: string
+  displayName: string | undefined
+  brand: string | undefined
+  company: string | undefined
+  imageUrl: string | undefined
 }
 
 export default defineEventHandler(async (event) => {
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
       },
     })
 
-    console.log('my_response: ', response.hits[0])
+    console.log('my_response: ', response.hits?.[0])
 
     if (response.totalResultsReturned === 0) {
       throw createError({
@@ -30,10 +30,10 @@ export default defineEventHandler(async (event) => {
 
     const productInfo: ProductInfo = {
       janCode: query.janCode as string,
-      displayName: response.hits[0].name,
-      brand: response.hits[0].brand.name,
-      company: response.hits[0].parentBrands[1] !== undefined ? response.hits[0].parentBrands[1].name : response.hits[0].parentBrands[0].name,
-      imageUrl: response.hits[0].image.medium,
+      displayName: response.hits?.[0].name,
+      brand: response.hits?.[0].brand?.name,
+      company: response.hits?.[0].parentBrands?.[1]?.name,
+      imageUrl: response.hits?.[0].image?.medium,
     }
 
     return productInfo

@@ -4,10 +4,15 @@ const product_name = ref('')
 const eating_allowed = ref('')
 const image_url = ref('')
 const delete_id = ref('')
-const { data: items } = useFetch('/api/fridge_items')
+const items = ref([])
 
-const addItem = () => {
-  useFetch('/api/fridge_items', {
+const fetchItems = async () => {
+  const { data } = await useFetch('/api/fridge_items')
+  items.value = data.value
+}
+
+const addItem = async () => {
+  await useFetch('/api/fridge_items', {
     method: 'post',
     body: {
       owner_name: owner_name.value,
@@ -20,17 +25,22 @@ const addItem = () => {
   product_name.value = ''
   eating_allowed.value = ''
   image_url.value = ''
+  fetchItems()  // リストを更新
 }
 
-const deleteItem = () => {
-  useFetch('/api/fridge_items', {
+const deleteItem = async () => {
+  await useFetch('/api/fridge_items', {
     method: 'delete',
     body: {
       delete_id: delete_id.value,
     },
   })
   delete_id.value = ''
+  fetchItems()  // リストを更新
 }
+
+// 初回読み込み時にデータを取得
+fetchItems()
 </script>
 
 <template>
@@ -118,7 +128,7 @@ const deleteItem = () => {
         >
         <br>
         <button type="submit">
-          削除
+        削除
         </button>
       </div>
     </form>

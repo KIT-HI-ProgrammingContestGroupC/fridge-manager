@@ -38,12 +38,20 @@ import type { DetectedBarcode, BarcodeFormat } from 'barcode-detector/pure'
 const barcodeFormats: BarcodeFormat[] = ['ean_13', 'ean_8']
 
 const emit = defineEmits<{
-  (e: 'barcode-detected', value: string): void
+  (e: 'barcode-detected', value): void
 }>()
 
-function onDetect(detectedCodes: DetectedBarcode[]) {
+const onDetect = async (detectedCodes: DetectedBarcode[]): Promise<void> => {
   console.log(detectedCodes)
-  emit('barcode-detected', detectedCodes.map(code => code.rawValue)[0])
+
+  const data = await $fetch('/api/yahooAPIWrapper', {
+    method: 'get',
+    query: {
+      janCode: detectedCodes[0].rawValue,
+    },
+  })
+
+  emit('barcode-detected', data)
 }
 
 /** * select camera ***/

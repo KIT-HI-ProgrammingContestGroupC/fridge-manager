@@ -81,7 +81,7 @@
           justify="center"
         >
           <v-col cols="auto">
-            <!-- Puls Action Button -->
+            <!-- Plus Action Button -->
             <v-btn
               color="red"
               density="comfortable"
@@ -126,18 +126,20 @@
                   return-object
                 />
                 <v-text-field
+                  v-model="product_name"
                   hint="Enter your product name you want to put on the fridge"
                   label="Product Name"
                   type="input"
                 />
                 <v-switch
-                  :model-value="true"
+                  v-model="eating_allowed"
                   color="primary"
                   label="Take free?"
                   inset
                 />
                 Photo
                 <v-img
+                  ref="image_url"
                   :width="350"
                   aspect-ratio="16/9"
                   cover
@@ -152,7 +154,7 @@
                 text="Register"
                 color="blue"
                 variant="flat"
-                @click="showPopup = false"
+                @click="addItem"
               />
               <v-btn
                 text="close"
@@ -295,11 +297,43 @@ watch(members, (newMembers) => {
   }
 })
 
+// ==============================================
+// =============ここからDB関連のスクリプト===========
+// ==============================================
+
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
 // 何か実行した後に表のデータが更新されない！！！という時は、この関数を該当する処理の末尾に入れると解決します。多分。
 const fetchItems = async () => {
   const { data } = await useFetch('/api/fridge_items')
   rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
+}
+
+// データ保存用の変数。データ追加フォームの各textbox等と紐づけられる。
+const product_name = ref('')
+const eating_allowed = ref('')
+const image_url = ref('')
+
+// DBにデータを追加する関数
+const addItem = async () => {
+  // fridge_items.post.tsの中身を呼び出す
+  await useFetch('/api/fridge_items', {
+    method: 'post',
+    body: {
+      owner_name: selectedMember.value.real_name,
+      product_name: product_name.value,
+      eating_allowed: eating_allowed.value,
+      image_url: image_url.value.src,
+    },
+  })
+
+  // 対応するテキストボックス等を空にする
+  selectedMember.value = ''
+  product_name.value = ''
+  eating_allowed.value = true
+  image_url.value = ''
+
+  showPopup.value = false // ポップアップを閉じる
+  fetchItems() // リストを更新
 }
 
 fetchItems()// 初回読み込み時にDBからデータを取得

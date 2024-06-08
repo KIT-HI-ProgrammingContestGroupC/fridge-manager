@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     data: {
       owner_name: body.owner_name,
       product_name: body.product_name,
-      eating_allowed: body.eating_allowed == 'true',
+      eating_allowed: (body.eating_allowed == 'true' || body.eating_allowed == true),
       image_url: body.image_url,
     },
   })

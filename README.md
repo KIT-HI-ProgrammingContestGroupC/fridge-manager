@@ -7,7 +7,7 @@
 
 ```bash
 npm install
-```-na
+```
 
 ### サーバの起動
 ```bash

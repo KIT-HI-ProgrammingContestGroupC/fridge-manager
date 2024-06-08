@@ -16,7 +16,7 @@ datasource db {
 model fridge_items{
   id              Int @id @default(autoincrement())
   owner_name      String
-  uploaded_at     DateTime @default(now())
+  uploaded_at     String
   product_name    String
   eating_allowed  Boolean @default(false)
   image_url       String

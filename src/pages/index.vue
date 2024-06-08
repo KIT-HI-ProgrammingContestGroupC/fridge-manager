@@ -139,7 +139,7 @@
                 />
                 Photo
                 <v-img
-                  v-model="image_url"
+                  ref="image_url"
                   :width="350"
                   aspect-ratio="16/9"
                   cover
@@ -322,7 +322,7 @@ const addItem = async () => {
       owner_name: selectedMember.value.real_name,
       product_name: product_name.value,
       eating_allowed: eating_allowed.value,
-      image_url: image_url.value,
+      image_url: image_url.value.src,
     },
   })
 

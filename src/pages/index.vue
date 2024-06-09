@@ -327,7 +327,7 @@ const addItem = async () => {
   // 対応するテキストボックス等を空にする
   selectedMember.value = ''
   product_name.value = ''
-  eating_allowed.value = true
+  eating_allowed.value = false
   image_url.value = ''
 
   showPopup.value = false // ポップアップを閉じる

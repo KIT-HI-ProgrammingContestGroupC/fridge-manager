@@ -133,15 +133,19 @@
                 />
                 Photo
                 <v-img
-                  ref="image_url"
-                  :width="350"
-                  aspect-ratio="16/9"
-                  cover
-                  src="https://p.potaufeu.asahi.com/bab2-p/picture/27216500/6ff4c31a02eeec219dc41058f3aa608c_640px.jpg"
+                  :src="image_url"
                 />
               </v-card-text>
             </v-card-text>
 
+            <v-card-actions>
+              <v-btn
+                text="Autofill with Barcode Reader"
+                color="green"
+                variant="flat"
+                @click="showBarcodeReader = true"
+              />
+            </v-card-actions>
             <v-card-actions>
               <v-spacer />
               <v-btn
@@ -153,6 +157,27 @@
               <v-btn
                 text="close"
                 @click="showPopup = false"
+              />
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog
+          v-model="showBarcodeReader"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="headline">Barcode Reader</span>
+            </v-card-title>
+            <v-card-text>
+              <BarcodeReader
+                @barcode-detected="handleBarcodeDetected"
+              />
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                text="close"
+                @click="showBarcodeReader = false"
               />
             </v-card-actions>
           </v-card>
@@ -184,6 +209,7 @@ const rows = ref([]) // 表に表示する内容
 const searchQuery = ref('')
 const showSearchBar = ref(false)
 const showPopup = ref(false)
+const showBarcodeReader = ref(false)
 const showCheckboxes = ref(false)
 
 const filteredRows = computed(() => {
@@ -238,6 +264,12 @@ const editItem = () => {
 
 }
 
+const handleBarcodeDetected = async (data) => {
+  product_name.value = data.displayName
+  image_url.value = data.imageUrl
+  showBarcodeReader.value = false
+}
+
 watch(filteredRows, (newfilteredRows) => {
   const lengthDifference = newfilteredRows.length - checkBoxes.value.length
   if (lengthDifference > 0) {
@@ -288,7 +320,7 @@ const addItem = async () => {
       owner_name: selectedMember.value.real_name,
       product_name: product_name.value,
       eating_allowed: eating_allowed.value,
-      image_url: image_url.value.src,
+      image_url: image_url.value,
     },
   })
 

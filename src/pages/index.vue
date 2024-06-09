@@ -314,7 +314,7 @@ const image_url = ref('')
 // DBにデータを追加する関数
 const addItem = async () => {
   // fridge_items.post.tsの中身を呼び出す
-  await useFetch('/api/fridge_items', {
+  await $fetch('/api/fridge_items', {
     method: 'post',
     body: {
       owner_name: selectedMember.value.real_name,

@@ -58,6 +58,11 @@
               :value="item.id"
             />
           </template>
+          <template #item.image_url="{ item }">
+            <v-img
+              :src="item.image_url"
+            />
+          </template>
         </v-data-table>
         <v-expand-transition>
           <v-btn

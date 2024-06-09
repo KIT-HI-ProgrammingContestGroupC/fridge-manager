@@ -45,23 +45,17 @@
         </v-row>
 
         <!-- Data Table -->
-        <!-- <v-data-table
-          v-model="selected"
-          :headers="headers"
-          item-value="id"
-          :items="filteredRows"
-          class="elevation-1"
-        /> -->
         <v-data-table
           :headers="headers"
           :items="filteredRows"
           item-value="id"
           class="elevation-1"
         >
-          <template #item.selected="{ index }">
+          <template #item.selected="{ item }">
             <v-checkbox
               v-if="showCheckboxes"
-              v-model="checkBoxes[index]"
+              v-model="checkBoxes"
+              :value="item.id"
             />
           </template>
         </v-data-table>
@@ -184,32 +178,7 @@ const menuItems = ref([
   { title: '項目削除', action: 'delete' },
   { title: '項目編集', action: 'edit' },
 ])
-// const rows = ref([
-//   {
-//     id: '1',
-//     owner: 'Alice',
-//     date: '2024-05-01',
-//     name: 'Item1',
-//     take: '10',
-//     photo: 'Photo1',
-//   },
-//   {
-//     id: '2',
-//     owner: 'Bob',
-//     date: '2024-05-02',
-//     name: 'Item2',
-//     take: '20',
-//     photo: 'Photo2',
-//   },
-//   {
-//     id: '3',
-//     owner: 'Charlie',
-//     date: '2024-05-03',
-//     name: 'Item3',
-//     take: '30',
-//     photo: 'Photo3',
-//   },
-// ])
+
 const rows = ref([]) // 表に表示する内容
 
 const searchQuery = ref('')
@@ -244,7 +213,7 @@ const toggleCheckboxes = () => {
 
 const clickMenu = (action) => {
   if (action == 'delete') {
-    checkBoxes.value = (filteredRows.value.map(() => false))
+    checkBoxes.value = []
     toggleCheckboxes()
   }
   else if (action == 'edit') {
@@ -253,17 +222,14 @@ const clickMenu = (action) => {
 }
 const deleteItem = (check) => {
   /*
-  check：項目削除ボタンで追加されたチェックボックスに対して、
-  チェックをいれるとcheckの値がfalseからtrueに変化する
-  ex:
-  すべての項目にチェックが入っている場合：check == [ true, true, true ]
-  上から□✓□の場合：check == [ false, true, false ]
+  check：チェックの入ったひとのIDが入っている
+  全てチェックの場合、[1,2,3]
+  上から□✓□の場合[2]
   */
 
   // データベースの削除のためのSampleCode
   // for (let i = 0; i < check.length; i++) {
-  //   if (check[i])
-  //     delteDatebasse(i)
+  //    delteDatebasse(check[i])
   // }
   toggleCheckboxes()
 }

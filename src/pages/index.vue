@@ -337,6 +337,7 @@ const deleteItem = async (check) => {
   */
 
   for (let i = 0; i < check.length; i++) {
+    // fridge_items.delete.tsの中身を呼び出す
     await $fetch('/api/fridge_items', {
       method: 'delete',
       body: {
@@ -345,7 +346,7 @@ const deleteItem = async (check) => {
     })
   }
 
-  toggleCheckboxes()
+  toggleCheckboxes() // チェックボックスを非表示にする
   fetchItems() // リストを更新
 }
 

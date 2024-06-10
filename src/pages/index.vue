@@ -251,19 +251,6 @@ const clickMenu = (action) => {
     editItem()
   }
 }
-const deleteItem = (check) => {
-  /*
-  check：チェックの入ったひとのIDが入っている
-  全てチェックの場合、[1,2,3]
-  上から□✓□の場合[2]
-  */
-
-  // データベースの削除のためのSampleCode
-  // for (let i = 0; i < check.length; i++) {
-  //    delteDatebasse(check[i])
-  // }
-  toggleCheckboxes()
-}
 
 const editItem = () => {
 
@@ -307,6 +294,11 @@ watch(members, (newMembers) => {
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
 // 何か実行した後に表のデータが更新されない！！！という時は、この関数を該当する処理の末尾に入れると解決します。多分。
 const fetchItems = async () => {
+  const data = await $fetch('/api/fridge_items')
+  rows.value = data // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
+}
+// 初回のみこちらを呼び出す(useFetch, $fetchの使い分けのため)
+const firstFetchItems = async () => {
   const { data } = await useFetch('/api/fridge_items')
   rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
@@ -317,6 +309,7 @@ const eating_allowed = ref('')
 const image_url = ref('')
 
 // DBにデータを追加する関数
+// +ボタンのポップアップから各種値を入力した後、REGISTERボタンを押すと呼び出される
 const addItem = async () => {
   // fridge_items.post.tsの中身を呼び出す
   await $fetch('/api/fridge_items', {
@@ -339,7 +332,30 @@ const addItem = async () => {
   fetchItems() // リストを更新
 }
 
-fetchItems()// 初回読み込み時にDBからデータを取得
+// DBからデータを削除する関数
+// チェックボックスにチェックを入れた後、削除ボタンを押すと呼び出される
+const deleteItem = async (check) => {
+  /*
+  check：チェックの入ったひとのIDが入っている
+  全てチェックの場合、[1,2,3]
+  上から□✓□の場合[2]
+  */
+
+  for (let i = 0; i < check.length; i++) {
+    // fridge_items.delete.tsの中身を呼び出す
+    await $fetch('/api/fridge_items', {
+      method: 'delete',
+      body: {
+        delete_id: check[i],
+      },
+    })
+  }
+
+  toggleCheckboxes() // チェックボックスを非表示にする
+  fetchItems() // リストを更新
+}
+
+firstFetchItems()// 初回読み込み時にDBからデータを取得
 </script>
 
 <style scoped>

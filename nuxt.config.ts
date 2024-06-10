@@ -35,4 +35,13 @@ export default defineNuxtConfig({
     slackChannelId: process.env.SLACK_CHANNEL_ID,
     yahooClientId: process.env.YAHOO_CLIENT_ID,
   },
+  nitro: {
+    scheduledTasks: {
+      // cron構文で実行間隔を設定
+      '0 12 * * *': ['sendSlackTask'], // 毎日12時にタスクを実行する
+    },
+    experimental: {
+      tasks: true,
+    },
+  },
 })

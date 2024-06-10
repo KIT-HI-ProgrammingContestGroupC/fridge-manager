@@ -251,19 +251,6 @@ const clickMenu = (action) => {
     editItem()
   }
 }
-const deleteItem = (check) => {
-  /*
-  check：チェックの入ったひとのIDが入っている
-  全てチェックの場合、[1,2,3]
-  上から□✓□の場合[2]
-  */
-
-  // データベースの削除のためのSampleCode
-  // for (let i = 0; i < check.length; i++) {
-  //    delteDatebasse(check[i])
-  // }
-  toggleCheckboxes()
-}
 
 const editItem = () => {
 
@@ -317,6 +304,7 @@ const eating_allowed = ref('')
 const image_url = ref('')
 
 // DBにデータを追加する関数
+// +ボタンのポップアップから各種値を入力した後、REGISTERボタンを押すと呼び出される
 const addItem = async () => {
   // fridge_items.post.tsの中身を呼び出す
   await $fetch('/api/fridge_items', {
@@ -336,6 +324,28 @@ const addItem = async () => {
   image_url.value = ''
 
   showPopup.value = false // ポップアップを閉じる
+  fetchItems() // リストを更新
+}
+
+// DBからデータを削除する関数
+// チェックボックスにチェックを入れた後、削除ボタンを押すと呼び出される
+const deleteItem = async (check) => {
+  /*
+  check：チェックの入ったひとのIDが入っている
+  全てチェックの場合、[1,2,3]
+  上から□✓□の場合[2]
+  */
+
+  for (let i = 0; i < check.length; i++) {
+    await $fetch('/api/fridge_items', {
+      method: 'delete',
+      body: {
+        delete_id: check[i],
+      },
+    })
+  }
+
+  toggleCheckboxes()
   fetchItems() // リストを更新
 }
 

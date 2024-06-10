@@ -85,7 +85,7 @@
               color="red"
               density="comfortable"
               icon="mdi-plus"
-              style="bottom: 100px; position: fixed;"
+              style="bottom: 100px; position: fixed;left:30px;"
               variant="tonal"
               @click="showPopup = true"
             />
@@ -97,7 +97,7 @@
               color="blue"
               density="comfortable"
               icon="mdi-magnify"
-              style="bottom: 100px; position: fixed;"
+              style="bottom: 100px; position: fixed; right:30px;"
               variant="tonal"
               @click="toggleSearchBar"
             />

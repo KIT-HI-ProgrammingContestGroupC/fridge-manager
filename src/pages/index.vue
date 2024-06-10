@@ -294,6 +294,11 @@ watch(members, (newMembers) => {
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
 // 何か実行した後に表のデータが更新されない！！！という時は、この関数を該当する処理の末尾に入れると解決します。多分。
 const fetchItems = async () => {
+  const data = await $fetch('/api/fridge_items')
+  rows.value = data // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
+}
+// 初回のみこちらを呼び出す(useFetch, $fetchの使い分けのため)
+const firstFetchItems = async () => {
   const { data } = await useFetch('/api/fridge_items')
   rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
@@ -350,7 +355,7 @@ const deleteItem = async (check) => {
   fetchItems() // リストを更新
 }
 
-fetchItems()// 初回読み込み時にDBからデータを取得
+firstFetchItems()// 初回読み込み時にDBからデータを取得
 </script>
 
 <style scoped>

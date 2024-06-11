@@ -136,7 +136,12 @@
                   label="Take free?"
                   inset
                 />
-                Photo
+                <v-file-input
+                  v-model="image_binary"
+                  label="No Barcode? Input your product image manually"
+                  accept="image/*"
+                  @change="onFileUploaded"
+                />
                 <v-img
                   :src="image_url"
                 />
@@ -315,6 +320,16 @@ const eating_allowed = ref('')
 const image_url = ref('')
 // エラーメッセージ保存用の変数。フォーム入力の不足・不正があればここに警告文を入れる。
 const errorMessage = ref('')
+const image_binary = ref()
+
+// 画像ファイルがアップロードされたら、その画像をData URLに変換してimage_urlに入れる関数
+const onFileUploaded = async () => {
+  const reader = new FileReader()
+  reader.readAsDataURL(image_binary.value)
+  reader.onload = (e) => {
+    image_url.value = e.target.result
+  }
+}
 
 // DBにデータを追加する関数
 // +ボタンのポップアップから各種値を入力した後、REGISTERボタンを押すと呼び出される

@@ -345,13 +345,16 @@ const addItem = async () => {
   // 他の項目を追加する場合はこのif文に項目を追加してください。
   errorMessage.value = ''
 
-  if (!oname || !pname) {
+  if (!oname || !pname || !iurl) {
     errorMessage.value = 'Please fill following data! : '
     if (!oname) {
       errorMessage.value += 'Owner '
     }
     if (!pname) {
       errorMessage.value += 'ProductName '
+    }
+    if (!iurl) {
+      errorMessage.value += 'Image '
     }
   }
 

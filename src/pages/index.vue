@@ -166,9 +166,10 @@
             </v-card-actions>
           </v-card>
           <v-card
-              v-if="errorMessage"
-              color="error">
-              {{ errorMessage }}
+            v-if="errorMessage"
+            color="error"
+          >
+            {{ errorMessage }}
           </v-card>
         </v-dialog>
 
@@ -319,29 +320,29 @@ const errorMessage = ref('')
 // +ボタンのポップアップから各種値を入力した後、REGISTERボタンを押すと呼び出される
 // フォームに必要なデータが入力されているか確認した後、入力されていればDBに追加する
 const addItem = async () => {
-  const oname = selectedMember.value.real_name  // 所有者名
-  const pname = product_name.value              // 製品名
-  const eallowed = eating_allowed.value         // 共有許可
-  const iurl = image_url.value                  // 写真
+  const oname = selectedMember.value.real_name // 所有者名
+  const pname = product_name.value // 製品名
+  const eallowed = eating_allowed.value // 共有許可
+  const iurl = image_url.value // 写真
 
   // ===フォーム確認======================================
   // 所有者名、製品名の2項目のみ確認しています。
   // 他の項目を追加する場合はこのif文に項目を追加してください。
   errorMessage.value = ''
 
-  if(!oname || !pname){
+  if (!oname || !pname) {
     errorMessage.value = 'Please fill following data! : '
-    if(!oname){
-      errorMessage.value += "Owner "
+    if (!oname) {
+      errorMessage.value += 'Owner '
     }
-    if(!pname){
-      errorMessage.value += "ProductName "
+    if (!pname) {
+      errorMessage.value += 'ProductName '
     }
   }
 
   // ===DBへの追加======================================
   // 必要な情報が全て入力されている時だけ処理を行う
-  if(!errorMessage.value){
+  if (!errorMessage.value) {
     // fridge_items.post.tsの中身を呼び出す
     await $fetch('/api/fridge_items', {
       method: 'post',

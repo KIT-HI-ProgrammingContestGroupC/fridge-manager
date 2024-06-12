@@ -217,7 +217,8 @@ const headers = ref([
 ])
 const menuItems = ref([
   { title: '項目削除', action: 'delete' },
-  { title: '項目編集', action: 'edit' },
+  // 項目編集の機能は最終報告までに間に合わなかったのでいったんコメントアウトしています
+  // { title: '項目編集', action: 'edit' },
 ])
 
 const rows = ref([]) // 表に表示する内容
@@ -263,9 +264,10 @@ const clickMenu = (action) => {
   }
 }
 
-const editItem = () => {
+// 項目編集の機能は最終報告までに間に合わなかったのでいったんコメントアウトしています
+// const editItem = () => {
 
-}
+// }
 
 const handleBarcodeDetected = async (data) => {
   product_name.value = data.displayName

@@ -26,5 +26,4 @@ logs
 # Local DB
 dev.db
 
-#
-dev.db-journa
+dev.db-journal

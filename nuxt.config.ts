@@ -44,4 +44,5 @@ export default defineNuxtConfig({
       tasks: true,
     },
   },
+  plugins: ['~/plugins/constants.ts'],
 })

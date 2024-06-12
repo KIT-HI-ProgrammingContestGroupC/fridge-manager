@@ -1,4 +1,4 @@
-import sendMessageToSlack from '~/server/api/sendMessageToSlack'
+import { TWO_WEEKS, TWO_WEEKS_STRING } from '~/constants'
 
 export default defineTask({
   meta: {
@@ -7,25 +7,34 @@ export default defineTask({
   },
   async run() {
     try {
-      console.log('maihun')
       // 1.データベースから商品情報を取得
       const items = await $fetch('/api/fridge_items')
 
       // 2.二週間が経過した商品を見つける
       const today = new Date()
-      const twoWeeksAgo = new Date(today.getTime() - (14 * 24 * 60 * 60 * 1000)) // 現在の日付 - 14日間をミリ秒単位
-      const expiredProducts = items.filter((item) => { //
+      const twoWeeksAgo = new Date(today.getTime() - TWO_WEEKS) // 現在の日付 - 14日間をミリ秒単位
+      const expiredProducts = items.filter((item) => {
         return new Date(item.uploaded_at) <= twoWeeksAgo
       })
 
       // 3.Slackにメッセージを送信
-      expiredProducts.forEach((product) => {
-        const message = `${product.product_name}は、2週間以上入ったままだよ`
-        sendMessageToSlack(message)
-      })
+      for (const product of expiredProducts) {
+        const message = `${product.product_name}は、${TWO_WEEKS_STRING}以上入ったままだよ`
+        await $fetch('/api/sendMessageToSlack', { // `await` は非同期関数内でのみ使用可能
+          method: 'post',
+          body: {
+            message: JSON.stringify({ message }),
+          },
+        })
+      }
 
-      const message = `(プロコンの間既定の時間に送るかの確認中)`
-      sendMessageToSlack(message)
+      const imessage = `(プロコンの間既定の時間に送るかの確認中)`
+      await $fetch('/api/sendMessageToSlack', { // `await` は非同期関数内でのみ使用可能
+        method: 'post',
+        body: {
+          message: JSON.stringify({ imessage }),
+        },
+      })
 
       return { result: 'Task completed successfully' }
     }

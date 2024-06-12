@@ -25,3 +25,6 @@ logs
 
 # Local DB
 dev.db
+
+#
+dev.db-journa

@@ -1,4 +1,4 @@
-import { TWO_WEEKS, TWO_WEEKS_STRING } from '~/constants'
+import { PERIOD_EXCEEDED_MS, PERIOD_EXCEEDED_STRING } from '~/constants'
 
 export default defineTask({
   meta: {
@@ -12,27 +12,27 @@ export default defineTask({
 
       // 2.二週間が経過した商品を見つける
       const today = new Date()
-      const twoWeeksAgo = new Date(today.getTime() - TWO_WEEKS) // 現在の日付 - 14日間をミリ秒単位
+      const twoWeeksAgo = new Date(today.getTime() - PERIOD_EXCEEDED_MS) // 現在の日付 - 14日間をミリ秒単位
       const expiredProducts = items.filter((item) => {
         return new Date(item.uploaded_at) <= twoWeeksAgo
       })
 
       // 3.Slackにメッセージを送信
       for (const product of expiredProducts) {
-        const message = `${product.product_name}は、${TWO_WEEKS_STRING}以上入ったままだよ`
+        const message = `${product.product_name}は、${PERIOD_EXCEEDED_STRING}以上入ったままだよ`
         await $fetch('/api/sendMessageToSlack', { // `await` は非同期関数内でのみ使用可能
-          method: 'post',
+          method: 'POST',
           body: {
-            message: JSON.stringify({ message }),
+            message: message,
           },
         })
       }
 
       const imessage = `(プロコンの間既定の時間に送るかの確認中)`
       await $fetch('/api/sendMessageToSlack', { // `await` は非同期関数内でのみ使用可能
-        method: 'post',
+        method: 'POST',
         body: {
-          message: JSON.stringify({ imessage }),
+          message: imessage,
         },
       })
 

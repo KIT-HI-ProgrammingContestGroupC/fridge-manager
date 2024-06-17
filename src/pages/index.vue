@@ -207,12 +207,11 @@
 import { ref, computed, watch } from 'vue'
 
 const headers = ref([
-  { title: 'ID', key: 'id' },
-  { title: 'Owner', key: 'owner_name' },
-  { title: 'Date', key: 'uploaded_at' },
-  { title: 'Name', key: 'product_name' },
   { title: 'Take', key: 'eating_allowed' },
   { title: 'Photo', key: 'image_url' },
+  { title: 'Name', key: 'product_name' },
+  { title: 'Owner', key: 'owner_name' },
+  { title: 'Date', key: 'uploaded_at' },
   { title: '', key: 'selected' },
 ])
 const menuItems = ref([

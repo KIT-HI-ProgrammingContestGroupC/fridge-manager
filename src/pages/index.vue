@@ -51,6 +51,13 @@
           item-value="id"
           class="elevation-1"
         >
+          <template #item.eating_allowed="{ item }">
+            <div
+              v-if="item.eating_allowed"
+            >
+              Free!
+            </div>
+          </template>
           <template #item.selected="{ item }">
             <v-checkbox
               v-if="showCheckboxes"

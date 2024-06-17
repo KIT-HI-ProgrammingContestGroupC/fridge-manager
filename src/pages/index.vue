@@ -49,8 +49,16 @@
           :headers="headers"
           :items="filteredRows"
           item-value="id"
+          items-per-page="-1"
           class="elevation-1"
         >
+          <template #item.eating_allowed="{ item }">
+            <div
+              v-if="item.eating_allowed"
+            >
+              Free!
+            </div>
+          </template>
           <template #item.selected="{ item }">
             <v-checkbox
               v-if="showCheckboxes"
@@ -207,12 +215,11 @@
 import { ref, computed, watch } from 'vue'
 
 const headers = ref([
-  { title: 'ID', key: 'id' },
-  { title: 'Owner', key: 'owner_name' },
-  { title: 'Date', key: 'uploaded_at' },
-  { title: 'Name', key: 'product_name' },
   { title: 'Take', key: 'eating_allowed' },
   { title: 'Photo', key: 'image_url' },
+  { title: 'Name', key: 'product_name' },
+  { title: 'Owner', key: 'owner_name' },
+  { title: 'Date', key: 'uploaded_at' },
   { title: '', key: 'selected' },
 ])
 const menuItems = ref([

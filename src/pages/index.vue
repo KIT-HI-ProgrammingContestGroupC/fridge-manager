@@ -49,6 +49,7 @@
           :headers="headers"
           :items="filteredRows"
           item-value="id"
+          items-per-page="-1"
           class="elevation-1"
         >
           <template #item.eating_allowed="{ item }">

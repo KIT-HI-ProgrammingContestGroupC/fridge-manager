@@ -292,7 +292,7 @@ watch(filteredRows, (newfilteredRows) => {
   }
 })
 
-const { data: members } = useFetch('/api/getSlackMembers')
+const { data: members } = useFetch('/api/slackMembers')
 
 // membersが取得できた場合の処理
 const selectedMember = ref(null)

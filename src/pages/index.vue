@@ -293,19 +293,7 @@ watch(filteredRows, (newfilteredRows) => {
 })
 
 const { data: members } = useFetch('/api/slackMembers')
-
-// membersが取得できた場合の処理
 const selectedMember = ref(null)
-
-watch(members, (newMembers) => {
-  if (newMembers.length > 0) {
-    selectedMember.value = newMembers[0]
-    console.log('Members fetched successfully:', newMembers)
-    newMembers.forEach((member) => {
-      console.log(member.name)
-    })
-  }
-})
 
 // ==============================================
 // =============ここからDB関連のスクリプト===========

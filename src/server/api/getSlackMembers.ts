@@ -5,32 +5,39 @@ export default defineEventHandler(async () => {
 
   try {
     // チャンネルメンバーの取得
-    const response = await fetch(`https://slack.com/api/conversations.members?channel=${channelId}`, {
+    const response = await $fetch('https://slack.com/api/conversations.members', {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      query: {
+        channel: channelId,
       },
     })
     if (!response.ok) {
       throw new Error('Failed to fetch channel members')
     }
-    const data = await response.json()
-    const memberIds = data.members
 
     // メンバーの詳細情報の取得
-    const members = await Promise.all(memberIds.map(async (id: string) => {
-      const userResponse = await fetch(`https://slack.com/api/users.info?user=${id}`, {
+    const memberIds = response.members
+
+    const infoOfMembers = await Promise.all(memberIds.map(async (id: string) => {
+      const userResponse = await $fetch('https://slack.com/api/users.info', {
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
+        },
+        query: {
+          user: id,
         },
       })
       if (!userResponse.ok) {
         throw new Error('Failed to fetch user info')
       }
-      const userData = await userResponse.json()
-      return userData.user
+      return userResponse.user
     }))
 
-    return members
+    return infoOfMembers
   }
   catch (error) {
     console.error('Error fetching Slack members:', error)

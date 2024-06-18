@@ -292,6 +292,8 @@ watch(filteredRows, (newfilteredRows) => {
   }
 })
 
+// members is an array of user objects, selectedMember is a user object
+// about user object, see https://api.slack.com/methods/users.info#examples
 const { data: members } = useFetch('/api/slackMembers')
 const selectedMember = ref(null)
 

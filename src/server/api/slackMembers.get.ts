@@ -1,3 +1,6 @@
+// return an array of user objects: information of members who belong to the specified Slack channel
+// about user object, see https://api.slack.com/methods/users.info#examples
+
 export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
   const token = config.slackBotToken

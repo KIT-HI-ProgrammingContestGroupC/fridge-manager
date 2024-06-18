@@ -1,4 +1,3 @@
-// export default async function sendMessageToSlack(message: string) {
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const token = config.slackBotToken

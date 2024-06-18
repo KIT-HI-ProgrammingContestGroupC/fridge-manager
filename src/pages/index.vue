@@ -292,20 +292,10 @@ watch(filteredRows, (newfilteredRows) => {
   }
 })
 
-const { data: members } = useFetch('/api/getSlackMembers')
-
-// membersが取得できた場合の処理
+// members is an array of user objects, selectedMember is a user object
+// about user object, see https://api.slack.com/methods/users.info#examples
+const { data: members } = useFetch('/api/slackMembers')
 const selectedMember = ref(null)
-
-watch(members, (newMembers) => {
-  if (newMembers.length > 0) {
-    selectedMember.value = newMembers[0]
-    console.log('Members fetched successfully:', newMembers)
-    newMembers.forEach((member) => {
-      console.log(member.name)
-    })
-  }
-})
 
 // ==============================================
 // =============ここからDB関連のスクリプト===========

@@ -14,7 +14,6 @@
       <v-alert
         color="error"
         icon="$error"
-        title="Camera error"
         :text="error"
       />
     </div>
@@ -44,14 +43,18 @@ const emit = defineEmits<{
 const onDetect = async (detectedCodes: DetectedBarcode[]): Promise<void> => {
   console.log(detectedCodes)
 
-  const data = await $fetch('/api/yahooAPIWrapper', {
-    method: 'get',
-    query: {
-      janCode: detectedCodes[0].rawValue,
-    },
-  })
-
-  emit('barcode-detected', data)
+  try {
+    const data = await $fetch('/api/yahooAPIWrapper', {
+      method: 'get',
+      query: {
+        janCode: detectedCodes[0].rawValue,
+      },
+    })
+    emit('barcode-detected', data)
+  }
+  catch (err) {
+    error.value = 'Sorry, we could not find the product information for this barcode. Please input the product information manually.'
+  }
 }
 
 /** * select camera ***/

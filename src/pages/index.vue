@@ -26,23 +26,16 @@
         </v-menu>
       </v-app-bar>
 
-      <!-- Search Bar -->
       <v-main>
-        <v-row>
-          <v-col
-            cols="12"
-            class="d-flex justify-end"
-          >
-            <v-expand-transition>
-              <v-text-field
-                v-if="showSearchBar"
-                v-model="searchQuery"
-                label="Search"
-                prepend-inner-icon="mdi-magnify"
-              />
-            </v-expand-transition>
-          </v-col>
-        </v-row>
+        <!-- Search Bar -->
+        <v-expand-transition>
+          <v-text-field
+            v-if="showSearchBar"
+            v-model="searchQuery"
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+          />
+        </v-expand-transition>
 
         <!-- Data Table -->
         <v-data-table
@@ -83,37 +76,26 @@
           </v-btn>
         </v-expand-transition>
 
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col cols="auto">
-            <!-- Plus Action Button -->
-            <v-btn
-              color="red"
-              density="comfortable"
-              icon="mdi-plus"
-              style="bottom: 100px; position: fixed;left:30px;"
-              variant="tonal"
-              @click="showPopup = true"
-            />
-          </v-col>
-          <v-spacer />
-          <v-col cols="auto">
-            <!-- Search Action Button -->
-            <v-btn
-              color="blue"
-              density="comfortable"
-              icon="mdi-magnify"
-              style="bottom: 100px; position: fixed; right:30px;"
-              variant="tonal"
-              @click="toggleSearchBar"
-            />
-          </v-col>
-        </v-row>
+        <!-- Plus Action Button -->
+        <v-btn
+          color="red"
+          density="comfortable"
+          icon="mdi-plus"
+          style="bottom: 100px; position: fixed;left:30px;"
+          variant="tonal"
+          @click="showPopup = true"
+        />
+        <!-- Search Action Button -->
+        <v-btn
+          color="blue"
+          density="comfortable"
+          icon="mdi-magnify"
+          style="bottom: 100px; position: fixed; right:30px;"
+          variant="tonal"
+          @click="toggleSearchBar"
+        />
 
         <!-- Popup Dialog -->
-        <!-- ここに谷君のコード or Componentsが入る？ -->
         <v-dialog
           v-model="showPopup"
           persistent
@@ -123,39 +105,39 @@
             <v-card-title>
               <span class="headline">Popup</span>
             </v-card-title>
+            <!-- Input area -->
             <v-card-text>
-              <v-card-text>
-                <v-select
-                  v-model="selectedMember"
-                  label="Owner"
-                  :items="members"
-                  item-title="profile.real_name"
-                  return-object
-                />
-                <v-text-field
-                  v-model="product_name"
-                  hint="Enter your product name you want to put on the fridge"
-                  label="Product Name"
-                  type="input"
-                />
-                <v-switch
-                  v-model="eating_allowed"
-                  color="primary"
-                  label="Take free?"
-                  inset
-                />
-                <v-file-input
-                  v-model="image_binary"
-                  label="No Barcode? Input your product image manually"
-                  accept="image/*"
-                  @change="onFileUploaded"
-                />
-                <v-img
-                  :src="image_url"
-                />
-              </v-card-text>
+              <v-select
+                v-model="selectedMember"
+                label="Owner"
+                :items="members"
+                item-title="profile.real_name"
+                return-object
+              />
+              <v-text-field
+                v-model="product_name"
+                hint="Enter your product name you want to put on the fridge"
+                label="Product Name"
+                type="input"
+              />
+              <v-switch
+                v-model="eating_allowed"
+                color="primary"
+                label="Take free?"
+                inset
+              />
+              <v-file-input
+                v-model="image_binary"
+                label="No Barcode? Input your product image manually"
+                accept="image/*"
+                @change="onFileUploaded"
+              />
+              <v-img
+                :src="image_url"
+              />
             </v-card-text>
 
+            <!-- Button area -->
             <v-card-actions>
               <v-btn
                 text="Autofill with Barcode Reader"
@@ -165,7 +147,6 @@
               />
             </v-card-actions>
             <v-card-actions>
-              <v-spacer />
               <v-btn
                 text="Register"
                 color="blue"
@@ -178,6 +159,7 @@
               />
             </v-card-actions>
           </v-card>
+          <!-- Error Message -->
           <v-card
             v-if="errorMessage"
             color="error"
@@ -186,6 +168,7 @@
           </v-card>
         </v-dialog>
 
+        <!-- Barcode Reader Dialog -->
         <v-dialog
           v-model="showBarcodeReader"
         >

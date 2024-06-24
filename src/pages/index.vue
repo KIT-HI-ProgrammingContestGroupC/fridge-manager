@@ -107,37 +107,36 @@
             <v-card-title>
               <span class="headline">Popup</span>
             </v-card-title>
+            <!-- Input area -->
             <v-card-text>
-              <v-card-text>
-                <v-select
-                  v-model="selectedMember"
-                  label="Owner"
-                  :items="members"
-                  item-title="profile.real_name"
-                  return-object
-                />
-                <v-text-field
-                  v-model="product_name"
-                  hint="Enter your product name you want to put on the fridge"
-                  label="Product Name"
-                  type="input"
-                />
-                <v-switch
-                  v-model="eating_allowed"
-                  color="primary"
-                  label="Take free?"
-                  inset
-                />
-                <v-file-input
-                  v-model="image_binary"
-                  label="No Barcode? Input your product image manually"
-                  accept="image/*"
-                  @change="onFileUploaded"
-                />
-                <v-img
-                  :src="image_url"
-                />
-              </v-card-text>
+              <v-select
+                v-model="selectedMember"
+                label="Owner"
+                :items="members"
+                item-title="profile.real_name"
+                return-object
+              />
+              <v-text-field
+                v-model="product_name"
+                hint="Enter your product name you want to put on the fridge"
+                label="Product Name"
+                type="input"
+              />
+              <v-switch
+                v-model="eating_allowed"
+                color="primary"
+                label="Take free?"
+                inset
+              />
+              <v-file-input
+                v-model="image_binary"
+                label="No Barcode? Input your product image manually"
+                accept="image/*"
+                @change="onFileUploaded"
+              />
+              <v-img
+                :src="image_url"
+              />
             </v-card-text>
 
             <v-card-actions>

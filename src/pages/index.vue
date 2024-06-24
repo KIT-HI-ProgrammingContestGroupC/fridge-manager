@@ -155,6 +155,8 @@
                 variant="flat"
                 @click="showBarcodeReader = true"
               />
+            </v-card-actions>
+            <v-card-actions>
               <v-btn
                 text="Register"
                 color="blue"

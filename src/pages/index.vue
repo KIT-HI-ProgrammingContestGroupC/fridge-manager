@@ -96,7 +96,6 @@
         />
 
         <!-- Popup Dialog -->
-        <!-- ここに谷君のコード or Componentsが入る？ -->
         <v-dialog
           v-model="showPopup"
           persistent
@@ -138,6 +137,7 @@
               />
             </v-card-text>
 
+            <!-- Button area -->
             <v-card-actions>
               <v-btn
                 text="Autofill with Barcode Reader"
@@ -159,6 +159,7 @@
               />
             </v-card-actions>
           </v-card>
+          <!-- Error Message -->
           <v-card
             v-if="errorMessage"
             color="error"
@@ -167,6 +168,7 @@
           </v-card>
         </v-dialog>
 
+        <!-- Barcode Reader Dialog -->
         <v-dialog
           v-model="showBarcodeReader"
         >

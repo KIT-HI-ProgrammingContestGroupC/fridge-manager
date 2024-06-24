@@ -26,23 +26,16 @@
         </v-menu>
       </v-app-bar>
 
-      <!-- Search Bar -->
       <v-main>
-        <v-row>
-          <v-col
-            cols="12"
-            class="d-flex justify-end"
-          >
-            <v-expand-transition>
-              <v-text-field
-                v-if="showSearchBar"
-                v-model="searchQuery"
-                label="Search"
-                prepend-inner-icon="mdi-magnify"
-              />
-            </v-expand-transition>
-          </v-col>
-        </v-row>
+        <!-- Search Bar -->
+        <v-expand-transition>
+          <v-text-field
+            v-if="showSearchBar"
+            v-model="searchQuery"
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+          />
+        </v-expand-transition>
 
         <!-- Data Table -->
         <v-data-table
@@ -83,34 +76,25 @@
           </v-btn>
         </v-expand-transition>
 
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col cols="auto">
-            <!-- Plus Action Button -->
-            <v-btn
-              color="red"
-              density="comfortable"
-              icon="mdi-plus"
-              style="bottom: 100px; position: fixed;left:30px;"
-              variant="tonal"
-              @click="showPopup = true"
-            />
-          </v-col>
-          <v-spacer />
-          <v-col cols="auto">
-            <!-- Search Action Button -->
-            <v-btn
-              color="blue"
-              density="comfortable"
-              icon="mdi-magnify"
-              style="bottom: 100px; position: fixed; right:30px;"
-              variant="tonal"
-              @click="toggleSearchBar"
-            />
-          </v-col>
-        </v-row>
+        <!-- Plus Action Button -->
+        <v-btn
+          color="red"
+          density="comfortable"
+          icon="mdi-plus"
+          style="bottom: 100px; position: fixed;left:30px;"
+          variant="tonal"
+          @click="showPopup = true"
+        />
+        <v-spacer />
+        <!-- Search Action Button -->
+        <v-btn
+          color="blue"
+          density="comfortable"
+          icon="mdi-magnify"
+          style="bottom: 100px; position: fixed; right:30px;"
+          variant="tonal"
+          @click="toggleSearchBar"
+        />
 
         <!-- Popup Dialog -->
         <!-- ここに谷君のコード or Componentsが入る？ -->

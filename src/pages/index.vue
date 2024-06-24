@@ -85,7 +85,6 @@
           variant="tonal"
           @click="showPopup = true"
         />
-        <v-spacer />
         <!-- Search Action Button -->
         <v-btn
           color="blue"
@@ -148,7 +147,6 @@
               />
             </v-card-actions>
             <v-card-actions>
-              <v-spacer />
               <v-btn
                 text="Register"
                 color="blue"

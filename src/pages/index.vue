@@ -105,16 +105,13 @@
             <v-card-title>
               <v-container>
                 <v-row>
-                  <v-col cols="11">
-                    Add Item
-                  </v-col>
+                  Add Item
+                  <v-spacer />
                   <!-- Close Button -->
-                  <v-col cols="1">
-                    <v-icon
-                      icon="mdi-close"
-                      @click="showPopup = false"
-                    />
-                  </v-col>
+                  <v-icon
+                    icon="mdi-close"
+                    @click="showPopup = false"
+                  />
                 </v-row>
               </v-container>
             </v-card-title>
@@ -158,6 +155,8 @@
                 variant="flat"
                 @click="showBarcodeReader = true"
               />
+            </v-card-actions>
+            <v-card-actions>
               <v-btn
                 text="Register"
                 color="blue"
@@ -183,16 +182,13 @@
             <v-card-title>
               <v-container>
                 <v-row>
-                  <v-col cols="11">
-                    Barcode Reader
-                  </v-col>
+                  Barcode Reader
+                  <v-spacer />
                   <!-- Close Button -->
-                  <v-col cols="1">
-                    <v-icon
-                      icon="mdi-close"
-                      @click="showBarcodeReader = false"
-                    />
-                  </v-col>
+                  <v-icon
+                    icon="mdi-close"
+                    @click="showBarcodeReader = false"
+                  />
                 </v-row>
               </v-container>
             </v-card-title>

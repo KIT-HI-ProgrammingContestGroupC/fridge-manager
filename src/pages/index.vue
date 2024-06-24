@@ -72,7 +72,7 @@
             color="error"
             @click="deleteItem(checkBoxes)"
           >
-            削除
+            Delete
           </v-btn>
         </v-expand-transition>
 
@@ -103,7 +103,7 @@
         >
           <v-card>
             <v-card-title>
-              <span class="headline">Popup</span>
+              Add Item
             </v-card-title>
             <!-- Input area -->
             <v-card-text>
@@ -174,7 +174,7 @@
         >
           <v-card>
             <v-card-title>
-              <span class="headline">Barcode Reader</span>
+              Barcode Reader
             </v-card-title>
             <v-card-text>
               <BarcodeReader
@@ -206,7 +206,7 @@ const headers = ref([
   { title: '', key: 'selected' },
 ])
 const menuItems = ref([
-  { title: '項目削除', action: 'delete' },
+  { title: 'Delete Item', action: 'delete' },
   // 項目編集の機能は最終報告までに間に合わなかったのでいったんコメントアウトしています
   // { title: '項目編集', action: 'edit' },
 ])

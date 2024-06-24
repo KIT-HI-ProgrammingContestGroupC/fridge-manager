@@ -191,6 +191,7 @@
         </v-dialog>
       </v-main>
     </v-container>
+    <AppFooter />
   </v-app>
 </template>
 

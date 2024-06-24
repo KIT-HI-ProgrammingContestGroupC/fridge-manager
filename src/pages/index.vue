@@ -411,17 +411,8 @@ firstFetchItems()// 初回読み込み時にDBからデータを取得
     font-family: 'Roboto', sans-serif;
   }
 
-  .fab {
-    right: 16px;
-    bottom: 16px;
-  }
-
   .v-toolbar {
     background-color: #1976d2;
-  }
-
-  .v-icon {
-    color: white;
   }
 
   .v-list-item {

@@ -103,7 +103,20 @@
         >
           <v-card>
             <v-card-title>
-              Add Item
+              <v-container>
+                <v-row>
+                  <v-col cols="11">
+                    Add Item
+                  </v-col>
+                  <!-- Close Button -->
+                  <v-col cols="1">
+                    <v-icon
+                      icon="mdi-close"
+                      @click="showPopup = false"
+                    />
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-card-title>
             <!-- Input area -->
             <v-card-text>
@@ -145,17 +158,11 @@
                 variant="flat"
                 @click="showBarcodeReader = true"
               />
-            </v-card-actions>
-            <v-card-actions>
               <v-btn
                 text="Register"
                 color="blue"
                 variant="flat"
                 @click="addItem"
-              />
-              <v-btn
-                text="close"
-                @click="showPopup = false"
               />
             </v-card-actions>
           </v-card>
@@ -174,19 +181,26 @@
         >
           <v-card>
             <v-card-title>
-              Barcode Reader
+              <v-container>
+                <v-row>
+                  <v-col cols="11">
+                    Barcode Reader
+                  </v-col>
+                  <!-- Close Button -->
+                  <v-col cols="1">
+                    <v-icon
+                      icon="mdi-close"
+                      @click="showBarcodeReader = false"
+                    />
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-card-title>
             <v-card-text>
               <BarcodeReader
                 @barcode-detected="handleBarcodeDetected"
               />
             </v-card-text>
-            <v-card-actions>
-              <v-btn
-                text="close"
-                @click="showBarcodeReader = false"
-              />
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-main>
@@ -397,17 +411,8 @@ firstFetchItems()// 初回読み込み時にDBからデータを取得
     font-family: 'Roboto', sans-serif;
   }
 
-  .fab {
-    right: 16px;
-    bottom: 16px;
-  }
-
   .v-toolbar {
     background-color: #1976d2;
-  }
-
-  .v-icon {
-    color: white;
   }
 
   .v-list-item {

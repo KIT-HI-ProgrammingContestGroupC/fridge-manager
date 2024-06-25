@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import version from './app-version'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -34,6 +35,10 @@ export default defineNuxtConfig({
     slackBotToken: process.env.SLACK_BOT_TOKEN,
     slackChannelId: process.env.SLACK_CHANNEL_ID,
     yahooClientId: process.env.YAHOO_CLIENT_ID,
+
+    public: {
+      appVersion: version,
+    },
   },
   nitro: {
     scheduledTasks: {

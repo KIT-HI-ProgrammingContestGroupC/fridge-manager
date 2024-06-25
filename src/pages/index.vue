@@ -77,11 +77,12 @@
         </v-expand-transition>
 
         <!-- Plus Action Button -->
+        <!-- FIXME: CSS workaround. z-index: 999 is over footer, under dialogue. -->
         <v-btn
           color="red"
           density="comfortable"
           icon="mdi-plus"
-          style="bottom: 100px; position: fixed;left:30px;"
+          style="bottom: 100px; position: fixed;left:30px; z-index: 999;"
           variant="tonal"
           @click="showPopup = true"
         />
@@ -90,7 +91,7 @@
           color="blue"
           density="comfortable"
           icon="mdi-magnify"
-          style="bottom: 100px; position: fixed; right:30px;"
+          style="bottom: 100px; position: fixed; right:30px; z-index: 999;"
           variant="tonal"
           @click="toggleSearchBar"
         />

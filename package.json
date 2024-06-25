@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "preinstall": "node scripts/get-version.js",
     "prebuild": "node scripts/get-version.js",
     "build": "nuxt build",
     "predev": "node scripts/get-version.js",

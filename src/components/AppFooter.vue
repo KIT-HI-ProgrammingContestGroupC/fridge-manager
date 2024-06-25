@@ -12,9 +12,14 @@
           Report Issue
         </v-btn>
       </v-row>
+      fridge-manager {{ appVersion }}
     </v-footer>
   </v-container>
 </template>
+
+<script setup lang="ts">
+const appVersion: string = useRuntimeConfig().public.appVersion
+</script>
 
 <style>
 .footer-container {

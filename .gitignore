@@ -27,3 +27,6 @@ logs
 dev.db
 
 dev.db-journal
+
+# app version file
+app-version.js

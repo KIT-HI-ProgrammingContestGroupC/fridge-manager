@@ -5,7 +5,6 @@
         <!-- Search Bar -->
         <v-expand-transition>
           <v-text-field
-            v-if="showSearchBar"
             v-model="searchQuery"
             label="Search"
             prepend-inner-icon="mdi-magnify"
@@ -87,16 +86,6 @@
             </template>
           </v-list-item>
         </v-list>
-
-        <!-- Search Action Button -->
-        <v-btn
-          color="blue"
-          density="comfortable"
-          icon="mdi-magnify"
-          style="bottom: 100px; position: fixed; right:30px; z-index: 999;"
-          variant="tonal"
-          @click="toggleSearchBar"
-        />
 
         <!-- Popup Dialog -->
         <v-dialog

@@ -1,31 +1,6 @@
 <template>
   <v-app>
     <v-container>
-      <!-- header -->
-      <v-app-bar>
-        <v-btn
-          id="menu-activator"
-          color="primary"
-        >
-          <v-icon
-            color="info"
-            icon="mdi-menu"
-          />
-        </v-btn>
-        <v-menu activator="#menu-activator">
-          <v-list>
-            <v-list-item
-              v-for="(item, index) in menuItems"
-              :key="index"
-            >
-              <v-list-item-title @click="clickMenu(item.action)">
-                {{ item.title }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-app-bar>
-
       <v-main>
         <!-- Search Bar -->
         <v-expand-transition>
@@ -113,16 +88,6 @@
           </v-list-item>
         </v-list>
 
-        <!-- Plus Action Button -->
-        <!-- FIXME: CSS workaround. z-index: 999 is over footer, under dialogue. -->
-        <v-btn
-          color="red"
-          density="comfortable"
-          icon="mdi-plus"
-          style="bottom: 100px; position: fixed;left:30px; z-index: 999;"
-          variant="tonal"
-          @click="showPopup = true"
-        />
         <!-- Search Action Button -->
         <v-btn
           color="blue"

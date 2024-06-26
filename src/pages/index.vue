@@ -200,27 +200,11 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 
-const headers = ref([
-  { title: 'Take', key: 'eating_allowed' },
-  { title: 'Photo', key: 'image_url' },
-  { title: 'Name', key: 'product_name' },
-  { title: 'Owner', key: 'owner_name' },
-  { title: 'Date', key: 'uploaded_at' },
-  { title: '', key: 'selected' },
-])
-const menuItems = ref([
-  { title: 'Delete Item', action: 'delete' },
-  // 項目編集の機能は最終報告までに間に合わなかったのでいったんコメントアウトしています
-  // { title: '項目編集', action: 'edit' },
-])
-
 const rows = ref([]) // 表に表示する内容
 
 const searchQuery = ref('')
-const showSearchBar = ref(false)
 const showPopup = ref(false)
 const showBarcodeReader = ref(false)
-const showCheckboxes = ref(false)
 
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
@@ -234,28 +218,6 @@ const filteredRows = computed(() => {
     )
   }
 })
-const checkBoxes = ref([])
-
-const toggleSearchBar = () => {
-  showSearchBar.value = !showSearchBar.value
-  if (!showSearchBar.value) {
-    searchQuery.value = ''
-  }
-}
-
-const toggleCheckboxes = () => {
-  showCheckboxes.value = !showCheckboxes.value
-}
-
-const clickMenu = (action) => {
-  if (action == 'delete') {
-    checkBoxes.value = []
-    toggleCheckboxes()
-  }
-  else if (action == 'edit') {
-    editItem()
-  }
-}
 
 // 項目編集の機能は最終報告までに間に合わなかったのでいったんコメントアウトしています
 // const editItem = () => {
@@ -267,16 +229,6 @@ const handleBarcodeDetected = async (data) => {
   image_url.value = data.imageUrl
   showBarcodeReader.value = false
 }
-
-watch(filteredRows, (newfilteredRows) => {
-  const lengthDifference = newfilteredRows.length - checkBoxes.value.length
-  if (lengthDifference > 0) {
-    checkBoxes.value.push(...Array(lengthDifference).fill(false))
-  }
-  else if (lengthDifference < 0) {
-    checkBoxes.value.splice(lengthDifference)
-  }
-})
 
 // members is an array of user objects, selectedMember is a user object
 // about user object, see https://api.slack.com/methods/users.info#examples
@@ -387,7 +339,6 @@ const deleteItem = async (check) => {
     })
   }
 
-  toggleCheckboxes() // チェックボックスを非表示にする
   fetchItems() // リストを更新
 }
 

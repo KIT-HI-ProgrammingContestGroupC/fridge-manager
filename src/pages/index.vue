@@ -37,44 +37,81 @@
           />
         </v-expand-transition>
 
-        <!-- Data Table -->
-        <v-data-table
-          :headers="headers"
-          :items="filteredRows"
-          item-value="id"
-          items-per-page="-1"
-          class="elevation-1"
-        >
-          <template #item.eating_allowed="{ item }">
-            <div
-              v-if="item.eating_allowed"
-            >
-              Free!
-            </div>
-          </template>
-          <template #item.selected="{ item }">
-            <v-checkbox
-              v-if="showCheckboxes"
-              v-model="checkBoxes"
-              :value="item.id"
-            />
-          </template>
-          <template #item.image_url="{ item }">
-            <v-img
-              :src="item.image_url"
-            />
-          </template>
-        </v-data-table>
-        <v-expand-transition>
-          <v-btn
-            v-if="showCheckboxes"
-            label="Delete"
-            color="error"
-            @click="deleteItem(checkBoxes)"
+        <!-- Data List -->
+        <v-list>
+          <v-list-item
+            border
           >
-            Delete
-          </v-btn>
-        </v-expand-transition>
+            <v-list-item-title>
+              Fridge Items
+            </v-list-item-title>
+            <template #append>
+              <v-btn
+                icon="mdi-plus"
+                color="primary"
+                density="compact"
+                @click="showPopup = true"
+              />
+            </template>
+          </v-list-item>
+
+          <v-list-item
+            v-for="(item, index) in filteredRows"
+            :key="index"
+            lines="three"
+            border
+          >
+            <!-- Image -->
+            <template #prepend>
+              <!-- ma-2 = Margin All-direction 2x4 -->
+              <div class="ma-2">
+                <!-- FIXME: :width=50 -->
+                <v-img
+                  :width="50"
+                  :src="item.image_url"
+                />
+              </div>
+            </template>
+
+            <!-- Discription -->
+            <v-list-item-title>
+              {{ item.product_name }}
+            </v-list-item-title>
+
+            <v-list-item-subtitle>
+              <p>
+                {{ item.owner_name }}
+              </p>
+              <p>
+                {{ item.uploaded_at }}
+              </p>
+              <p v-if="item.eating_allowed">
+                Take free!
+              </p>
+            </v-list-item-subtitle>
+
+            <!-- 3 dots vertical button -->
+            <template #append>
+              <v-menu>
+                <template #activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    icon="mdi-dots-vertical"
+                    density="compact"
+                    variant="text"
+                  />
+                </template>
+
+                <v-list>
+                  <v-list-item
+                    title="Delete Item"
+                    @click="deleteItem([item.id])"
+                  />
+                </v-list>
+              </v-menu>
+            </template>
+          </v-list-item>
+        </v-list>
 
         <!-- Plus Action Button -->
         <!-- FIXME: CSS workaround. z-index: 999 is over footer, under dialogue. -->

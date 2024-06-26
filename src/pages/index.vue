@@ -350,10 +350,6 @@ firstFetchItems()// 初回読み込み時にDBからデータを取得
     font-family: 'Roboto', sans-serif;
   }
 
-  .v-toolbar {
-    background-color: #1976d2;
-  }
-
   .v-list-item {
     cursor: pointer;
   }

@@ -2,6 +2,12 @@
 
 冷蔵庫の中のものを管理するためのwebアプリ
 
+<img src="./img/appImg_v2.0.0.png" height=600>
+
+## Feature
+- バーコードから商品名とサムネイルを読み取ることができる
+- 長時間放置すると、Slackに通知を送る
+
 ## For developer
 ### パッケージのインストール
 

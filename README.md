@@ -2,6 +2,8 @@
 
 冷蔵庫の中のものを管理するためのwebアプリ
 
+<img src="./img/appImg_v2.0.0.png" height=600>
+
 ## For developer
 ### パッケージのインストール
 

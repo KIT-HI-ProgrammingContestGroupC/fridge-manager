@@ -198,8 +198,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-
 const rows = ref([]) // 表に表示する内容
 
 const searchQuery: Ref<string> = ref('')

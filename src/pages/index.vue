@@ -22,12 +22,11 @@
 </template>
 
 <script setup lang="ts">
-const rows = ref([]) // 表に表示する内容
-rows.value = await $fetch('/api/fridge_items')
-
 const searchQuery: Ref<string> = ref('')
 const showPopup: Ref<boolean> = ref(false)
 
+const rows = ref([]) // 表に表示する内容
+rows.value = await $fetch('/api/fridge_items')
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
     return rows.value

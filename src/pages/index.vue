@@ -25,8 +25,15 @@
 const searchQuery: Ref<string> = ref('')
 const showPopup: Ref<boolean> = ref(false)
 
-const rows = ref([]) // 表に表示する内容
-rows.value = await $fetch('/api/fridge_items')
+interface FridgeItem {
+  id: number
+  owner_name: string
+  uploaded_at: string
+  product_name: string
+  eating_allowed: boolean
+  image_url: string
+}
+const rows: Ref<FridgeItem[]> = await $fetch('/api/fridge_items')
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
     return rows.value

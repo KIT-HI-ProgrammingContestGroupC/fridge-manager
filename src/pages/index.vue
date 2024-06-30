@@ -2,14 +2,9 @@
   <v-app>
     <v-container>
       <v-main>
-        <!-- Search Bar -->
-        <v-expand-transition>
-          <v-text-field
-            v-model="searchQuery"
-            label="Search"
-            prepend-inner-icon="mdi-magnify"
-          />
-        </v-expand-transition>
+        <SearchBar
+          v-model="searchQuery"
+        />
 
         <!-- Data List -->
         <v-list>

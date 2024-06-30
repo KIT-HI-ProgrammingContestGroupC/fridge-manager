@@ -80,31 +80,10 @@
       </v-card>
     </v-dialog>
 
-    <!-- Barcode Reader Dialog -->
-    <v-dialog
-      v-model="showBarcodeReader"
-    >
-      <v-card>
-        <v-card-title>
-          <v-container>
-            <v-row>
-              Barcode Reader
-              <v-spacer />
-              <!-- Close Button -->
-              <v-icon
-                icon="mdi-close"
-                @click="showBarcodeReader = false"
-              />
-            </v-row>
-          </v-container>
-        </v-card-title>
-        <v-card-text>
-          <BarcodeReader
-            @barcode-detected="handleBarcodeDetected"
-          />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <AutoFillBarcodeReaderDialogue
+      v-model:showBarcodeReader="showBarcodeReader"
+      @get-product-info="handleProductInfo"
+    />
   </div>
 </template>
 
@@ -194,10 +173,10 @@ const addItem = async (): Promise<void> => {
   }
 }
 
-const handleBarcodeDetected = async (data): Promise<void> => {
+const handleProductInfo = async (productName: string, imageURL: string): Promise<void> => {
   // 読み取った情報をフォームに入力
-  formFields.product_name.value = data.displayName
-  formFields.image_url.value = data.imageUrl
+  formFields.product_name.value = productName
+  formFields.image_url.value = imageURL
   // バーコードリーダーを閉じる
   showBarcodeReader.value = false
 }

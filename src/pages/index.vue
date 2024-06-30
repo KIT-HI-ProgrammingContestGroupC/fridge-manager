@@ -197,14 +197,12 @@
   </v-app>
 </template>
 
-<script setup>
-import { ref, computed, watch } from 'vue'
-
+<script setup lang="ts">
 const rows = ref([]) // 表に表示する内容
 
-const searchQuery = ref('')
-const showPopup = ref(false)
-const showBarcodeReader = ref(false)
+const searchQuery: Ref<string> = ref('')
+const showPopup: Ref<boolean> = ref(false)
+const showBarcodeReader: Ref<boolean> = ref(false)
 
 const filteredRows = computed(() => {
   if (!searchQuery.value) {
@@ -224,7 +222,7 @@ const filteredRows = computed(() => {
 
 // }
 
-const handleBarcodeDetected = async (data) => {
+const handleBarcodeDetected = async (data): Promise<void> => {
   product_name.value = data.displayName
   image_url.value = data.imageUrl
   showBarcodeReader.value = false
@@ -233,7 +231,7 @@ const handleBarcodeDetected = async (data) => {
 // members is an array of user objects, selectedMember is a user object
 // about user object, see https://api.slack.com/methods/users.info#examples
 const { data: members } = useFetch('/api/slackMembers')
-const selectedMember = ref(null)
+const selectedMember = ref()
 
 // ==============================================
 // =============ここからDB関連のスクリプト===========
@@ -241,26 +239,26 @@ const selectedMember = ref(null)
 
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ
 // 何か実行した後に表のデータが更新されない！！！という時は、この関数を該当する処理の末尾に入れると解決します。多分。
-const fetchItems = async () => {
+const fetchItems = async (): Promise<void> => {
   const data = await $fetch('/api/fridge_items')
   rows.value = data // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
 // 初回のみこちらを呼び出す(useFetch, $fetchの使い分けのため)
-const firstFetchItems = async () => {
+const firstFetchItems = async (): Promise<void> => {
   const { data } = await useFetch('/api/fridge_items')
   rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
 
 // データ保存用の変数。データ追加フォームの各textbox等と紐づけられる。
-const product_name = ref('')
-const eating_allowed = ref('')
-const image_url = ref('')
+const product_name: Ref<string> = ref('')
+const eating_allowed: Ref<boolean> = ref(false)
+const image_url: Ref<string> = ref('')
 // エラーメッセージ保存用の変数。フォーム入力の不足・不正があればここに警告文を入れる。
-const errorMessage = ref('')
-const image_binary = ref()
+const errorMessage: Ref<string> = ref('')
+const image_binary: Ref<Blob | undefined> = ref(undefined)
 
 // 画像ファイルがアップロードされたら、その画像をData URLに変換してimage_urlに入れる関数
-const onFileUploaded = async () => {
+const onFileUploaded = async (): Promise<void> => {
   const reader = new FileReader()
   reader.readAsDataURL(image_binary.value)
   reader.onload = (e) => {
@@ -271,7 +269,7 @@ const onFileUploaded = async () => {
 // DBにデータを追加する関数
 // +ボタンのポップアップから各種値を入力した後、REGISTERボタンを押すと呼び出される
 // フォームに必要なデータが入力されているか確認した後、入力されていればDBに追加する
-const addItem = async () => {
+const addItem = async (): Promise<void> => {
   const oname = selectedMember.value.real_name // 所有者名
   const pname = product_name.value // 製品名
   const eallowed = eating_allowed.value // 共有許可
@@ -322,7 +320,7 @@ const addItem = async () => {
 
 // DBからデータを削除する関数
 // チェックボックスにチェックを入れた後、削除ボタンを押すと呼び出される
-const deleteItem = async (check) => {
+const deleteItem = async (check: number[]): Promise<void> => {
   /*
   check：チェックの入ったひとのIDが入っている
   全てチェックの場合、[1,2,3]

@@ -6,81 +6,10 @@
           v-model="searchQuery"
         />
 
-        <!-- Data List -->
-        <v-list>
-          <v-list-item
-            border
-          >
-            <v-list-item-title>
-              Fridge Items
-            </v-list-item-title>
-            <template #append>
-              <v-btn
-                icon="mdi-plus"
-                color="primary"
-                density="compact"
-                @click="showPopup = true"
-              />
-            </template>
-          </v-list-item>
-
-          <v-list-item
-            v-for="(item, index) in filteredRows"
-            :key="index"
-            lines="three"
-            border
-          >
-            <!-- Image -->
-            <template #prepend>
-              <!-- ma-2 = Margin All-direction 2x4 -->
-              <div class="ma-2">
-                <!-- FIXME: :width=50 -->
-                <v-img
-                  :width="50"
-                  :src="item.image_url"
-                />
-              </div>
-            </template>
-
-            <!-- Discription -->
-            <v-list-item-title>
-              {{ item.product_name }}
-            </v-list-item-title>
-
-            <v-list-item-subtitle>
-              <p>
-                {{ item.owner_name }}
-              </p>
-              <p>
-                {{ item.uploaded_at }}
-              </p>
-              <p v-if="item.eating_allowed">
-                Take free!
-              </p>
-            </v-list-item-subtitle>
-
-            <!-- 3 dots vertical button -->
-            <template #append>
-              <v-menu>
-                <template #activator="{ props }">
-                  <v-btn
-                    v-bind="props"
-                    icon="mdi-dots-vertical"
-                    density="compact"
-                    variant="text"
-                  />
-                </template>
-
-                <v-list>
-                  <v-list-item
-                    title="Delete Item"
-                    @click="deleteItem([item.id])"
-                  />
-                </v-list>
-              </v-menu>
-            </template>
-          </v-list-item>
-        </v-list>
+        <ListItems
+          :items="filteredRows"
+          @activate-product-form="() => showPopup = true"
+        />
 
         <!-- Popup Dialog -->
         <v-dialog
@@ -238,11 +167,6 @@ const fetchItems = async (): Promise<void> => {
   const data = await $fetch('/api/fridge_items')
   rows.value = data // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
 }
-// 初回のみこちらを呼び出す(useFetch, $fetchの使い分けのため)
-const firstFetchItems = async (): Promise<void> => {
-  const { data } = await useFetch('/api/fridge_items')
-  rows.value = data.value // 更新したデータをitemsに入れ、itemsはリアルタイムで更新される
-}
 
 // データ保存用の変数。データ追加フォームの各textbox等と紐づけられる。
 const product_name: Ref<string> = ref('')
@@ -312,30 +236,6 @@ const addItem = async (): Promise<void> => {
     fetchItems() // リストを更新
   }
 }
-
-// DBからデータを削除する関数
-// チェックボックスにチェックを入れた後、削除ボタンを押すと呼び出される
-const deleteItem = async (check: number[]): Promise<void> => {
-  /*
-  check：チェックの入ったひとのIDが入っている
-  全てチェックの場合、[1,2,3]
-  上から□✓□の場合[2]
-  */
-
-  for (let i = 0; i < check.length; i++) {
-    // fridge_items.delete.tsの中身を呼び出す
-    await $fetch('/api/fridge_items', {
-      method: 'delete',
-      body: {
-        delete_id: check[i],
-      },
-    })
-  }
-
-  fetchItems() // リストを更新
-}
-
-firstFetchItems()// 初回読み込み時にDBからデータを取得
 </script>
 
 <style scoped>

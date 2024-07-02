@@ -54,9 +54,9 @@
       <!-- 3 dots vertical button -->
       <template #append>
         <v-menu>
-          <template #activator="{ props }">
+          <template #activator="{ props: menuProps }">
             <v-btn
-              v-bind="props"
+              v-bind="menuProps"
               icon="mdi-dots-vertical"
               density="compact"
               variant="text"

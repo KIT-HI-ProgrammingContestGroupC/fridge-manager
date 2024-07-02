@@ -66,13 +66,19 @@
           <v-list>
             <v-list-item
               title="Delete Item"
-              @click="deleteItem([item.id])"
+              @click="openConfirmDeleteDialog(item)"
             />
           </v-list>
         </v-menu>
       </template>
     </v-list-item>
   </v-list>
+
+  <ConfirmDeleteDialogue
+    v-model:is-dialog-open="isConfirmDeleteDialogOpen"
+    :target-item="deleteTargetItem"
+    @delete-item="deleteItem([deleteTargetItem.id])"
+  />
 </template>
 
 <script setup lang="ts">
@@ -100,13 +106,28 @@ const deleteItem = async (itemIDs: number[]): Promise<void> => {
   items.value = await $fetch('/api/fridge_items')
 }
 
+interface FridgeItem {
+  id: number
+  owner_name: string
+  uploaded_at: string
+  product_name: string
+  eating_allowed: boolean
+  image_url: string
+}
+const isConfirmDeleteDialogOpen = ref(false)
+const deleteTargetItem: Ref<FridgeItem | undefined> = ref()
+const openConfirmDeleteDialog = (item: FridgeItem): void => {
+  deleteTargetItem.value = item
+  isConfirmDeleteDialogOpen.value = true
+}
+
 // 表示する行を検索クエリに基づいてフィルタリングする
 const filteredItems = computed(() => {
   if (!props.filterQuery) {
-    return props.items
+    return items.value
   }
   else {
-    return props.items.filter(item =>
+    return items.value.filter(item =>
       Object.values(item).some(val =>
         String(val).toLowerCase().includes(props.filterQuery.toLowerCase()),
       ),

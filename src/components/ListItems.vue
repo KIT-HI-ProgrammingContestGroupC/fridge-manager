@@ -17,7 +17,7 @@
     </v-list-item>
 
     <v-list-item
-      v-for="(item, index) in items"
+      v-for="(item, index) in filteredItems"
       :key="index"
       lines="three"
       border
@@ -54,9 +54,9 @@
       <!-- 3 dots vertical button -->
       <template #append>
         <v-menu>
-          <template #activator="{ props }">
+          <template #activator="{ props: menuProps }">
             <v-btn
-              v-bind="props"
+              v-bind="menuProps"
               icon="mdi-dots-vertical"
               density="compact"
               variant="text"
@@ -77,6 +77,9 @@
 
 <script setup lang="ts">
 const items = defineModel('items', { type: Array })
+const props = defineProps<{
+  filterQuery: string
+}>()
 
 const emit = defineEmits<{
   (e: 'activate-product-form'): void
@@ -96,6 +99,20 @@ const deleteItem = async (itemIDs: number[]): Promise<void> => {
 
   items.value = await $fetch('/api/fridge_items')
 }
+
+// 表示する行を検索クエリに基づいてフィルタリングする
+const filteredItems = computed(() => {
+  if (!props.filterQuery) {
+    return props.items
+  }
+  else {
+    return props.items.filter(item =>
+      Object.values(item).some(val =>
+        String(val).toLowerCase().includes(props.filterQuery.toLowerCase()),
+      ),
+    )
+  }
+})
 
 // init items
 items.value = await $fetch('/api/fridge_items')

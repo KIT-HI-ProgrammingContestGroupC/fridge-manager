@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '~/lib/prisma'
 
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient()
-
   const body = await readBody(event)
   const deletedItem = await prisma.fridge_items.delete({
     where: {

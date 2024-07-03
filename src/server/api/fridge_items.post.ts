@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '~/lib/prisma'
 
 export default defineEventHandler(async (event) => {
-  const prisma = new PrismaClient()
-
   // 日付取得・整形
   const now = new Date()
   const options: Intl.DateTimeFormatOptions = {

@@ -1,5 +1,3 @@
-import type { YahooAPIResponse } from '~/types/yahooAPIResponse'
-
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   try {

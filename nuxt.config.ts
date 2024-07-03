@@ -31,6 +31,9 @@ export default defineNuxtConfig({
     host: '0.0.0.0',
   },
   srcDir: 'src/',
+  imports: {
+    dirs: ['~/types'],
+  },
   runtimeConfig: { // token追加
     slackBotToken: process.env.SLACK_BOT_TOKEN,
     slackChannelId: process.env.SLACK_CHANNEL_ID,

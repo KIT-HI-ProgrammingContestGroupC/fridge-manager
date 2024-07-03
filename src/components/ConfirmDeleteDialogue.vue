@@ -62,14 +62,6 @@
 <script setup lang="ts">
 const isDialogOpen = defineModel('isDialogOpen', { type: Boolean }, { default: false })
 
-interface FridgeItem {
-  id: number
-  owner_name: string
-  uploaded_at: string
-  product_name: string
-  eating_allowed: boolean
-  image_url: string
-}
 const props = defineProps<{ targetItem: FridgeItem | undefined }>()
 
 const emit = defineEmits<{

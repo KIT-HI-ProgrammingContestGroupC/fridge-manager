@@ -106,14 +106,6 @@ const deleteItem = async (itemIDs: number[]): Promise<void> => {
   items.value = await $fetch('/api/fridge_items')
 }
 
-interface FridgeItem {
-  id: number
-  owner_name: string
-  uploaded_at: string
-  product_name: string
-  eating_allowed: boolean
-  image_url: string
-}
 const isConfirmDeleteDialogOpen = ref(false)
 const deleteTargetItem: Ref<FridgeItem | undefined> = ref()
 const openConfirmDeleteDialog = (item: FridgeItem): void => {

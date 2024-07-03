@@ -1,5 +1,5 @@
 // created by https://app.quicktype.io/
-export interface YahooAPIResponse {
+interface YahooAPIResponse {
   totalResultsAvailable?: number
   totalResultsReturned?: number
   firstResultPosition?: number
@@ -7,7 +7,7 @@ export interface YahooAPIResponse {
   hits?: Hit[]
 }
 
-export interface Hit {
+interface Hit {
   index?: number
   name?: string
   description?: string
@@ -39,36 +39,36 @@ export interface Hit {
   payment?: string
 }
 
-export interface Brand {
+interface Brand {
   id?: number
   name?: string
 }
 
-export interface Delivery {
+interface Delivery {
   area?: string
   deadLine?: null
   day?: null
 }
 
-export interface GenreCategory {
+interface GenreCategory {
   id?: number
   name?: string
   depth?: number
 }
 
-export interface Image {
+interface Image {
   small?: string
   medium?: string
 }
 
-export interface Point {
+interface Point {
   amount?: number
   times?: number
   premiumAmount?: number
   premiumTimes?: number
 }
 
-export interface PriceLabel {
+interface PriceLabel {
   taxable?: null
   defaultPrice?: number
   discountedPrice?: null
@@ -78,13 +78,13 @@ export interface PriceLabel {
   periodEnd?: null
 }
 
-export interface HitReview {
+interface HitReview {
   rate?: number
   count?: number
   url?: string
 }
 
-export interface Seller {
+interface Seller {
   sellerId?: string
   name?: string
   url?: string
@@ -93,16 +93,16 @@ export interface Seller {
   imageId?: string
 }
 
-export interface SellerReview {
+interface SellerReview {
   rate?: number
   count?: number
 }
 
-export interface Shipping {
+interface Shipping {
   code?: number
   name?: string
 }
 
-export interface Request {
+interface Request {
   query?: string
 }

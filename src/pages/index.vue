@@ -27,14 +27,6 @@ const searchQuery: Ref<string> = ref('')
 const showPopup: Ref<boolean> = ref(false)
 
 // 冷蔵庫の中身のデータを取得する
-interface FridgeItem {
-  id: number
-  owner_name: string
-  uploaded_at: string
-  product_name: string
-  eating_allowed: boolean
-  image_url: string
-}
 const rows: Ref<FridgeItem[]> = await $fetch('/api/fridge_items')
 
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ

@@ -30,6 +30,13 @@
 <script setup>
 import { ref } from 'vue'
 
+definePageMeta({
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/',
+  },
+})
+
 const { signIn } = useAuth()
 
 const username = ref('')

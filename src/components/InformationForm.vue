@@ -23,7 +23,7 @@
 
         <!-- Input area -->
         <v-card-text>
-          <v-select
+          <v-combobox
             v-model="formFields.owner_name.value"
             label="Owner"
             :items="members"

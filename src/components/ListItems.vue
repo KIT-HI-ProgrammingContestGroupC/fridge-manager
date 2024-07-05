@@ -17,7 +17,7 @@
     </v-list-item>
 
     <v-list-item
-      v-for="(item, index) in filteredItems"
+      v-for="(item, index) in items"
       :key="index"
       lines="three"
       border
@@ -54,9 +54,9 @@
       <!-- 3 dots vertical button -->
       <template #append>
         <v-menu>
-          <template #activator="{ props: menuProps }">
+          <template #activator="{ props }">
             <v-btn
-              v-bind="menuProps"
+              v-bind="props"
               icon="mdi-dots-vertical"
               density="compact"
               variant="text"
@@ -83,9 +83,6 @@
 
 <script setup lang="ts">
 const items = defineModel('items', { type: Array })
-const props = defineProps<{
-  filterQuery: string
-}>()
 
 const emit = defineEmits<{
   (e: 'activate-product-form'): void
@@ -119,18 +116,4 @@ const openConfirmDeleteDialog = (item: FridgeItem): void => {
   deleteTargetItem.value = item
   isConfirmDeleteDialogOpen.value = true
 }
-
-// 表示する行を検索クエリに基づいてフィルタリングする
-const filteredItems = computed(() => {
-  if (!props.filterQuery) {
-    return items.value
-  }
-  else {
-    return items.value.filter(item =>
-      Object.values(item).some(val =>
-        String(val).toLowerCase().includes(props.filterQuery.toLowerCase()),
-      ),
-    )
-  }
-})
 </script>

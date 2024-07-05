@@ -8,8 +8,7 @@
         />
 
         <ListItems
-          v-model:items="rows"
-          :filter-query="searchQuery"
+          :items="filteredRows"
           @activate-product-form="() => { showPopup = true }"
         />
 
@@ -35,6 +34,20 @@ const rows: Ref<FridgeItem[]> = await $fetch('/api/fridge_items', {
   query: {
     fridge_id: data.value.username,
   },
+})
+
+// 表示する行を検索クエリに基づいてフィルタリングする
+const filteredRows = computed(() => {
+  if (!searchQuery.value) {
+    return rows.value
+  }
+  else {
+    return rows.value.filter(row =>
+      Object.values(row).some(val =>
+        String(val).toLowerCase().includes(searchQuery.value.toLowerCase()),
+      ),
+    )
+  }
 })
 
 // DBからデータを取得する関数。データの更新が行われるたびに都度表示を更新したいので、何か処理するたびに呼ぶ

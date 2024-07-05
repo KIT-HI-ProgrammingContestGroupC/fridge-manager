@@ -16,7 +16,7 @@ export default eventHandler(async (event) => {
     })
   }
 
-  const expiresIn = 15
+  const expiresIn = (60 * 60 * 24) * 30 // 30 days
   const { username } = result.data
   const user = {
     username,

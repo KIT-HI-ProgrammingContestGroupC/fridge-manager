@@ -91,6 +91,8 @@ const emit = defineEmits<{
   (e: 'activate-product-form'): void
 }>()
 
+const { data } = useAuth()
+
 // DBからデータを削除する関数
 const deleteItem = async (itemIDs: number[]): Promise<void> => {
   for (let i = 0; i < itemIDs.length; i++) {
@@ -103,7 +105,12 @@ const deleteItem = async (itemIDs: number[]): Promise<void> => {
     })
   }
 
-  items.value = await $fetch('/api/fridge_items')
+  items.value = await $fetch('/api/fridge_items', {
+    method: 'GET',
+    query: {
+      fridge_id: data.value.username,
+    },
+  })
 }
 
 const isConfirmDeleteDialogOpen = ref(false)

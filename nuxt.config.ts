@@ -21,7 +21,14 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/eslint',
+    '@sidebase/nuxt-auth',
   ],
+  auth: {
+    provider: {
+      type: 'local',
+    },
+    globalAppMiddleware: true,
+  },
   eslint: {
     config: {
       stylistic: true,
@@ -38,6 +45,7 @@ export default defineNuxtConfig({
     slackBotToken: process.env.SLACK_BOT_TOKEN,
     slackChannelId: process.env.SLACK_CHANNEL_ID,
     yahooClientId: process.env.YAHOO_CLIENT_ID,
+    pepper: process.env.PEPPER_DB,
 
     public: {
       appVersion: version,

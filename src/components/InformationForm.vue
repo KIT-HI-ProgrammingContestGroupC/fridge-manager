@@ -98,6 +98,8 @@ const emit = defineEmits<{
   (e: 'post-data-added'): void
 }>()
 
+const { data } = useAuth()
+
 // データ保存用の変数。データ追加フォームの各textbox等と紐づけられる。
 interface FormFields {
   owner_name: Ref<string>
@@ -158,6 +160,7 @@ const addItem = async (): Promise<void> => {
         product_name: pname,
         eating_allowed: eallowed,
         image_url: iurl,
+        fridge_id: data.value.username,
       },
     })
 

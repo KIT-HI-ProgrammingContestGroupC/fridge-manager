@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <AppHeader />
     <v-container>
       <v-main>
         <SearchBar

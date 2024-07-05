@@ -21,7 +21,14 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/eslint',
+    '@sidebase/nuxt-auth',
   ],
+  auth: {
+    provider: {
+      type: 'local',
+    },
+    globalAppMiddleware: true,
+  },
   eslint: {
     config: {
       stylistic: true,

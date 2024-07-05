@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Login Page</h1>
-    <form @submit.prevent="signIn({ username, password })">
+    <form @submit.prevent="signIn({ username, password }, { callbackUrl: '/' })">
       <div>
         <label for="username">UserName:</label>
         <input

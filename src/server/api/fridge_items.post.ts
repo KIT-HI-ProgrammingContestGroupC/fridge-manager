@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   // ユーザ名から現在の冷蔵庫IDを取得
   const currentFridgeId = await prisma.fridge.findFirst({
     where: {
-      user_id: body.username,
+      user_id: body.fridge_id,
     },
   }).then((fridge) => {
     return fridge.id

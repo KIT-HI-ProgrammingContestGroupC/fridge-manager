@@ -29,7 +29,8 @@ const showPopup: Ref<boolean> = ref(false)
 const { data } = useAuth()
 
 // 冷蔵庫の中身のデータを取得する
-const rows: Ref<FridgeItem[]> = await $fetch('/api/fridge_items', {
+const rows: Ref<FridgeItem[]> = ref([])
+rows.value = await $fetch('/api/fridge_items', {
   method: 'GET',
   query: {
     fridge_id: data.value.username,

@@ -126,7 +126,4 @@ const filteredItems = computed(() => {
     )
   }
 })
-
-// init items
-items.value = await $fetch('/api/fridge_items')
 </script>

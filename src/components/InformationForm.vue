@@ -26,8 +26,7 @@
           <v-combobox
             v-model="formFields.owner_name.value"
             label="Owner"
-            :items="members"
-            item-title="profile.real_name"
+            :items="members_name"
           />
           <v-text-field
             v-model="formFields.product_name.value"
@@ -92,6 +91,10 @@ const isOpen = defineModel('isopen', { type: Boolean })
 // members is an array of user objects
 // about user object, see https://api.slack.com/methods/users.info#examples
 const { data: members } = useFetch('/api/slackMembers')
+const members_name: ComputedRef<string[]> = computed(() => {
+  return members.value.map(member => member.profile.real_name)
+})
+
 const showBarcodeReader: Ref<boolean> = ref(false)
 
 const emit = defineEmits<{

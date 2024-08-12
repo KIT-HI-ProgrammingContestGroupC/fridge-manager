@@ -19,7 +19,7 @@
     "@prisma/client": "^5.14.0",
     "@sidebase/nuxt-auth": "^0.8.0",
     "jsonwebtoken": "^9.0.2",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.12.4",
     "prisma": "^5.14.0",
     "sqlite3": "^5.1.7",
     "vite-plugin-vuetify": "^2.0.3",
